@@ -66,9 +66,7 @@ export default function BitcoinChart() {
       console.log(err);
     }
   };
-  useEffect(() => {
-    getBitcoinData();
-  }, []);  
+
   return (
     <>
       <Heading>Your Overview</Heading>

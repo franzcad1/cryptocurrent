@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { DownArrow } from "@styled-icons/boxicons-regular";
+import ProgressBar from "../ProgressBar/ProgressBar";
 
 const MainContainer = styled.div`
   margin: 0px auto;
@@ -32,31 +33,29 @@ const TextWithBarContainer = styled.div`
   gap: 7px;
 `;
 
-const Bar = styled.div`
-  display: flex;
-  flex: 1 1 0%;
-  width: 55px;
-  height: 13px;
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: rgb(39, 117, 201);
-  margin-top: 2.5px;
-`;
-
 const CoinIcon = styled.img`
- width: 14px;
- height: 14px;
+  width: 14px;
+  height: 14px;
 `;
 
 const DownIcon = styled(DownArrow)`
-  color: #00FF5F;
+  color: red;
   width: 10px;
   height: 10px;
+  margin-left: 5px;
+`;
+
+const UpIcon = styled(DownArrow)`
+  color: #00ff5f;
+  width: 10px;
+  height: 10px;
+  transform: rotate(90deg);
+  margin-left: 5px;
 `;
 export default function GeneralInfo() {
-  const [globalData, setGlobalData] = useState([]);
+  const [globalData, setGlobalData] = useState(null);
 
-  const convertedNumber = (value)  =>{
+  const convertedNumber = (value) => {
     let newValue = value;
     const suffixes = ["", "K", "M", "B", "T"];
     let suffixNum = 0;
@@ -68,15 +67,13 @@ export default function GeneralInfo() {
       return "∞";
     }
     newValue = newValue.toPrecision(4);
-  
+
     newValue += suffixes[suffixNum];
     return newValue;
-  }
+  };
   const getGlobalData = async () => {
     try {
-      const { data } = await axios(
-        `https://api.coingecko.com/api/v3/global`
-      );
+      const { data } = await axios(`https://api.coingecko.com/api/v3/global`);
       setGlobalData(data.data);
     } catch (err) {
       console.log(err);
@@ -85,14 +82,51 @@ export default function GeneralInfo() {
   useEffect(() => {
     getGlobalData();
   }, []);
+
   return (
     <MainContainer>
-      <TextContainer>Coins {globalData.active_cryptocurrencies} </TextContainer>
-      <TextContainer>Exchange {globalData.markets} </TextContainer>
-      <TextContainer>• ${convertedNumber(globalData.total_market_cap.cad)}  </TextContainer>
-      <TextWithBarContainer>• ${convertedNumber(globalData.total_volume.cad)}  <Bar/></TextWithBarContainer>
-      <TextWithBarContainer> <CoinIcon src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579" alt="btc img" />{globalData.market_cap_percentage.btc.toFixed(0)}% <Bar/></TextWithBarContainer>
-      <TextWithBarContainer> <CoinIcon src="https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880" alt="etc img" />{globalData.market_cap_percentage.eth.toFixed(0)}% <Bar/></TextWithBarContainer>
+      {globalData && (
+        <>
+          <TextContainer>
+            Coins: {globalData.active_cryptocurrencies}
+          </TextContainer>
+          <TextContainer>Exchange: {globalData.markets} </TextContainer>
+          <TextContainer>
+            Market Cap: ${convertedNumber(globalData.total_market_cap.cad)}
+            {globalData.market_cap_change_percentage_24h_usd >= 0 ? (
+              <UpIcon />
+            ) : (
+              <DownIcon />
+            )}
+          </TextContainer>
+          <TextWithBarContainer>
+            • ${convertedNumber(globalData.total_volume.cad)}
+            <ProgressBar
+              width={
+                (globalData.total_volume.cad /
+                  globalData.total_market_cap.cad) *
+                100
+              }
+            />
+          </TextWithBarContainer>
+          <TextWithBarContainer>
+            <CoinIcon
+              src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579"
+              alt="btc img"
+            />
+            {globalData.market_cap_percentage.btc.toFixed(0)}%
+            <ProgressBar width={globalData.market_cap_percentage.btc} />
+          </TextWithBarContainer>
+          <TextWithBarContainer>
+            <CoinIcon
+              src="https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880"
+              alt="etc img"
+            />
+            {globalData.market_cap_percentage.eth.toFixed(0)}%
+            <ProgressBar width={globalData.market_cap_percentage.eth} />
+          </TextWithBarContainer>
+        </>
+      )}
     </MainContainer>
   );
 }
