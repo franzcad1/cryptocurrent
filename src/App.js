@@ -3,15 +3,23 @@ import Coin from "./pages/Coin/Coin";
 import Navbar from "./components/Navbar/Navbar";
 import { Route, Routes } from "react-router-dom";
 import Portfolio from "./pages/Portfolio/Portfolio";
+import Landing from "./pages/Landing/Landing";
+import styled, {createGlobalStyle} from "styled-components";
 
-
+const GlobalStyle = createGlobalStyle`
+  body{
+    background: #1f2128; 
+  };
+`;
 function App() {
   return (
     <>
+      <GlobalStyle/>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Coin />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/coin" element={<Coin />} />
       </Routes>
     </>
   );

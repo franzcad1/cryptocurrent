@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
+import axios from "axios";
 import { DarkTheme } from "@styled-icons/fluentui-system-regular";
 import { DownArrow } from "@styled-icons/boxicons-regular";
 import { CurrencyDollar } from "styled-icons/bootstrap";
@@ -8,7 +9,6 @@ import GeneralInfo from "../GeneralInfo/GeneralInfo";
 const MainContainer = styled.div`
   margin: auto;
   display: flex;
-  max-width: 1900px;
   height: 97px;
   background: #191b1f;
   align-items: center;
@@ -105,7 +105,7 @@ const ThemeIcon = styled(DarkTheme)`
 const SearchIcon = styled(SearchAlt)`
   height: 21px;
   width: 21px;
-  color: #FAFBFB;
+  color: #fafbfb;
   margin-left: 20px;
 `;
 const DownIcon = styled(DownArrow)`
@@ -120,6 +120,21 @@ const DollarIcon = styled(CurrencyDollar)`
   height: 30px;
 `;
 export default function Navbar() {
+  const [data, setData] = useState([]);
+  const getBitcoinData = async () => {
+    try {
+      const { data } = await axios(
+        `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=cad&days=30&interval=daily`
+      );
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getBitcoinData();
+  }, [])
   return (
     <>
       <MainContainer>
@@ -129,7 +144,7 @@ export default function Navbar() {
         </PagesContainer>
         <UtilsContainer>
           <SearchContainer>
-            <SearchIcon/>
+            <SearchIcon />
             <SearchBar type="text" placeholder="Search..."></SearchBar>
           </SearchContainer>
           <CurrencyContainer>
