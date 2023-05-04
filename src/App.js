@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar/Navbar";
 import { Route, Routes } from "react-router-dom";
 import Portfolio from "./pages/Portfolio/Portfolio";
 
+
 function App() {
   return (
     <>
