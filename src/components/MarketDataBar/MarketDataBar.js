@@ -49,10 +49,10 @@ const UpIcon = styled(DownArrow)`
   color: #00ff5f;
   width: 10px;
   height: 10px;
-  transform: rotate(90deg);
+  transform: rotate(180deg);
   margin-left: 5px;
 `;
-export default function GeneralInfo() {
+export default function MarketDataBar() {
   const [globalData, setGlobalData] = useState(null);
 
   const convertedNumber = (value) => {

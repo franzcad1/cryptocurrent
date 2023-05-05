@@ -5,7 +5,7 @@ import { DarkTheme } from "@styled-icons/fluentui-system-regular";
 import { DownArrow } from "@styled-icons/boxicons-regular";
 import { CurrencyDollar } from "styled-icons/bootstrap";
 import { SearchAlt } from "styled-icons/boxicons-regular";
-import GeneralInfo from "../GeneralInfo/GeneralInfo";
+import MarketDataBar from "../MarketDataBar/MarketDataBar";
 const MainContainer = styled.div`
   margin: auto;
   display: flex;
@@ -120,21 +120,6 @@ const DollarIcon = styled(CurrencyDollar)`
   height: 30px;
 `;
 export default function Navbar() {
-  const [data, setData] = useState([]);
-  const getBitcoinData = async () => {
-    try {
-      const { data } = await axios(
-        `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=cad&days=30&interval=daily`
-      );
-      console.log(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    getBitcoinData();
-  }, [])
   return (
     <>
       <MainContainer>
@@ -159,7 +144,7 @@ export default function Navbar() {
           </ThemeContainer>
         </UtilsContainer>
       </MainContainer>
-      <GeneralInfo />
+      <MarketDataBar />
     </>
   );
 }

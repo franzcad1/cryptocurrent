@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { Component } from "react";
 import axios from "axios";
-import styled from "styled-components";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -23,58 +22,93 @@ ChartJS.register(
   Legend,
   Filler
 );
+export default class BitcoinChart extends Component {
+  state = {
+    bitcoinData: null,
+  };
 
-const Heading = styled.p`
-  font-size: 22px;
-  font-weight: 500;
-  font-style: normal;
-  text-align: left;
-  color: #ffffff;
-`;
+  options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      y: {
+        display: false,
+        grid: {
+          display: false,
+          drawBorder: false,
+        },
+      },
+      x: {
+        display: true,
+        grid: {
+          display: false,
+          drawBorder: false,
+        },
+        ticks: {
+          maxRotation: 0,
+        },
+      },
+    },
+    tension: 0.5,
+  };
 
-const ChartsContainer = styled.div`
-  display: flex;
-  gap: 46px;
-  justify-content: center;
-`;
-
-const Chart = styled.div`
-  width: 833px;
-  max-width: 833px;
-  height: 449px;
-  background: #191b1f;
-  border-radius: 15px;
-`;
-
-export default function BitcoinChart() {
-  const [data, setData] = useState([]);
-  const [bitcoinPriceData, setBitcoinPriceData] = useState(null);
-  const [mappedData, setMappedData] = useState(null);
-  const getBitcoinData = async () => {
+  getBitcoinData = async () => {
     try {
       const { data } = await axios(
         `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=cad&days=30&interval=daily`
       );
-      setData(data);
-      setBitcoinPriceData(
-        data.prices.map((values) => ({
-          x: values[0],
-          y: values[1],
-        }))
-      );
+      this.setState({ bitcoinData: data });
     } catch (err) {
       console.log(err);
     }
   };
 
-  return (
-    <>
-      <Heading>Your Overview</Heading>
-      <ChartsContainer>
-        <Chart>
-        </Chart>
-        <Chart></Chart>
-      </ChartsContainer>
-    </>
-  );
+  getMappedData = () => {
+    const mappedData = this.state.bitcoinData.prices.map((values) => ({
+      x: values[0],
+      y: values[1],
+    }));
+
+    const data = {
+      labels: mappedData.map((val) => {
+        const date = new Date(val.x);
+        return date.getDate();
+      }),
+      datasets: [
+        {
+          data: mappedData.map((val) => val.y),
+          borderColor: "#00FF5F",
+          backgroundColor: (context) => {
+            const ctx = context.chart.ctx;
+            const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+            gradient.addColorStop(0, "rgba(0, 255, 95, .56)");
+            gradient.addColorStop(1, "rgba(0, 0, 0, 0.0)");
+            return gradient;
+          },
+          pointRadius: 0,
+          borderWidth: 3,
+          fill: true,
+        },
+      ],
+    };
+
+    return data;
+  };
+
+  componentDidMount() {
+    this.getBitcoinData();
+  }
+  render() {
+    return (
+      <>
+        {this.state.bitcoinData && (
+          <Line options={this.options} data={this.getMappedData()} />
+        )}
+      </>
+    );
+  }
 }
