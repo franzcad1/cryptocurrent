@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import axios from "axios";
+import { connect } from "react-redux";
+import { getBitcoinData } from "../../store/bitcoin/bitcoinActions";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -22,11 +23,7 @@ ChartJS.register(
   Legend,
   Filler
 );
-export default class BitcoinChart extends Component {
-  state = {
-    bitcoinData: null,
-  };
-
+class BitcoinChart extends Component {
   options = {
     responsive: true,
     plugins: {
@@ -56,19 +53,8 @@ export default class BitcoinChart extends Component {
     tension: 0.5,
   };
 
-  getBitcoinData = async () => {
-    try {
-      const { data } = await axios(
-        `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=cad&days=30&interval=daily`
-      );
-      this.setState({ bitcoinData: data });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   getMappedData = () => {
-    const mappedData = this.state.bitcoinData.prices.map((values) => ({
+    const mappedData = this.props.bitcoin.data.prices.map((values) => ({
       x: values[0],
       y: values[1],
     }));
@@ -100,15 +86,25 @@ export default class BitcoinChart extends Component {
   };
 
   componentDidMount() {
-    this.getBitcoinData();
+    this.props.getBitcoinData();
   }
   render() {
     return (
       <>
-        {this.state.bitcoinData && (
+        {this.props.bitcoin.data && (
           <Line options={this.options} data={this.getMappedData()} />
         )}
       </>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  bitcoin: state.bitcoin,
+});
+
+const mapDispatchToProps = {
+  getBitcoinData,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BitcoinChart);
