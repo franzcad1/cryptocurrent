@@ -3,6 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { DownArrow } from "@styled-icons/boxicons-regular";
 import ProgressBar from "../ProgressBar/ProgressBar";
+import { convertedNumber } from "../../utils/convertedNumber";
 
 const MainContainer = styled.div`
   margin: 0px auto;
@@ -34,8 +35,8 @@ const TextWithBarContainer = styled.div`
 `;
 
 const CoinIcon = styled.img`
-  width: 14px;
-  height: 14px;
+  width: 20px;
+  height: 20px;
 `;
 
 const DownIcon = styled(DownArrow)`
@@ -55,22 +56,7 @@ const UpIcon = styled(DownArrow)`
 export default function MarketDataBar() {
   const [globalData, setGlobalData] = useState(null);
 
-  const convertedNumber = (value) => {
-    let newValue = value;
-    const suffixes = ["", "K", "M", "B", "T"];
-    let suffixNum = 0;
-    while (newValue >= 1000) {
-      newValue /= 1000;
-      suffixNum++;
-    }
-    if (!newValue) {
-      return "∞";
-    }
-    newValue = newValue.toPrecision(4);
-
-    newValue += suffixes[suffixNum];
-    return newValue;
-  };
+ 
   const getGlobalData = async () => {
     try {
       const { data } = await axios(`https://api.coingecko.com/api/v3/global`);

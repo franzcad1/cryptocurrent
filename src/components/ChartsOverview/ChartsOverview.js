@@ -1,8 +1,13 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import BitcoinChart from "../BitcoinChart/BitcoinChart";
-
+import VolumeChart from "../VolumeChart/VolumeChart";
+import { convertedNumber } from "../../utils/convertedNumber";
+import {
+  getBitcoinData,
+  getBitcoinDataHourly,
+} from "../../store/bitcoin/bitcoinActions";
 const Heading = styled.p`
   font-size: 22px;
   font-weight: 500;
@@ -60,10 +65,26 @@ const ChartTextCointainer = styled.div`
   margin-bottom: 50px;
 `;
 export default function ChartOverview() {
-  //const [data, setData] = useState([]);
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.bitcoin.data);
+  const dataHourly = useSelector((state) => state.bitcoin.dataHourly);
 
+  const getCurrentPriceSelector = () => {
+    const currentPrice = data.prices[data.prices.length - 1][1];
+    return Math.round(currentPrice).toLocaleString();
+  };
 
-  useEffect(() => {}, []);
+  const getCurrentVolumeSelector = () => {
+    const currentVolume =
+      dataHourly.total_volumes[dataHourly.total_volumes.length - 1][1];
+    return convertedNumber(currentVolume);
+  };
+
+  useEffect(() => {
+    dispatch(getBitcoinData());
+    dispatch(getBitcoinDataHourly());
+    //eslint-disable-next-line
+  }, []);
 
   return (
     <>
@@ -72,7 +93,7 @@ export default function ChartOverview() {
         <Chart>
           <ChartTextCointainer>
             <ChartHeading>BTC</ChartHeading>
-            <BigText>$28,856</BigText>
+            {data && <BigText>${getCurrentPriceSelector()}</BigText>}
             <ChartHeading>
               {new Date().toLocaleDateString("default", {
                 month: "short",
@@ -81,12 +102,12 @@ export default function ChartOverview() {
               })}
             </ChartHeading>
           </ChartTextCointainer>
-          <BitcoinChart />
+          <BitcoinChart data={data}/>
         </Chart>
         <Chart>
           <ChartTextCointainer>
             <ChartHeading>Volume 24h</ChartHeading>
-            <BigText>$807.24 bln</BigText>
+            {dataHourly && <BigText>${getCurrentVolumeSelector()}</BigText>}
             <ChartHeading>
               {new Date().toLocaleDateString("default", {
                 month: "short",
@@ -95,6 +116,7 @@ export default function ChartOverview() {
               })}
             </ChartHeading>
           </ChartTextCointainer>
+          <VolumeChart data={dataHourly}/>
         </Chart>
       </ChartsContainer>
     </>

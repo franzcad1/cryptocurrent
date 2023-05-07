@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getBitcoinData } from "../../store/bitcoin/bitcoinActions";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -54,7 +53,7 @@ class BitcoinChart extends Component {
   };
 
   getMappedData = () => {
-    const mappedData = this.props.bitcoin.data.prices.map((values) => ({
+    const mappedData = this.props.data.prices.map((values) => ({
       x: values[0],
       y: values[1],
     }));
@@ -84,14 +83,10 @@ class BitcoinChart extends Component {
 
     return data;
   };
-
-  componentDidMount() {
-    this.props.getBitcoinData();
-  }
   render() {
     return (
       <>
-        {this.props.bitcoin.data && (
+        {this.props.data && (
           <Line options={this.options} data={this.getMappedData()} />
         )}
       </>
@@ -99,12 +94,4 @@ class BitcoinChart extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  bitcoin: state.bitcoin,
-});
-
-const mapDispatchToProps = {
-  getBitcoinData,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(BitcoinChart);
+export default BitcoinChart;
