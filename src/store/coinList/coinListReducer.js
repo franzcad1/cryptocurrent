@@ -11,10 +11,12 @@ const initialState = {
     coins: [],
     isLoading: false,
     hasError: false,
-    page: 1
+    page: 1,
+    hasMore: true
 };
 
 function coinListReducer(state = initialState, action) {
+  console.log(action.type)
   switch (action.type) {
     case GET_COINS_PENDING:
       return {
@@ -37,18 +39,21 @@ function coinListReducer(state = initialState, action) {
         return {
           ...state,
           isLoading: true,
+          hasMore: true
         };
       case GET_MORE_COINS_SUCCESS:
         return {
           ...state,
-          coins: [...state.coins, ...action.payload],
+          ...action.payload,
           isLoading: false,
+          hasMore: true
         };
       case GET_MORE_COINS_ERROR:
         return {
           ...state,
           isLoading: false,
           hasError: true,
+          hasMore: false
         };
     default:
       return state;

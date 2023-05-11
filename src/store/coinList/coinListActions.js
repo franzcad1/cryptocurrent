@@ -28,3 +28,28 @@ import {
         });
       }
   }
+
+  export const getMoreCoinList = () => async (dispatch, getState) => {
+    const state = getState();
+    const page = state.coinList.page + 1;
+    try {
+        dispatch({
+            type: GET_MORE_COINS_PENDING
+        });
+        const { data } = await axios(
+          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=cad&order=market_cap_desc&per_page=10&page=${page}&sparkline=true&price_change_percentage=1h%2C24h%2C7d`
+        );
+        dispatch({
+            type: GET_MORE_COINS_SUCCESS,
+            payload: {
+              page: page,
+              coins: [...state.coinList.coins, ...data],
+            }
+        });
+      } catch (err) {
+        dispatch({
+            type: GET_MORE_COINS_ERROR,
+        });
+        console.log(err)
+      }
+  }
