@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { getCoinList } from "../../store/coinList/coinListActions";
 import { convertedNumber } from "../../utils/convertedNumber";
+import SparklineChart from "../SparklineChart/SparklineChart";
 
 const Heading = styled.p`
   font-size: 22px;
@@ -105,6 +106,15 @@ const CoinIcon = styled.img`
   margin-right: 7px;
 `;
 
+const ChartContainer = styled.div`
+  width: 150px;
+  height: 60px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export default function TableOverview(props) {
   const dispatch = useDispatch();
 
@@ -191,10 +201,17 @@ export default function TableOverview(props) {
                       </BarInfo>
                       <FullBar>
                         <PartialBar
-                          width={(coin.circulating_supply / coin.total_supply) * 100}
+                          width={
+                            (coin.circulating_supply / coin.total_supply) * 100
+                          }
                         />
                       </FullBar>
                     </BarContainer>
+                  </TableData>
+                  <TableData>
+                    <ChartContainer>
+                      <SparklineChart coin={coin} />
+                    </ChartContainer>
                   </TableData>
                 </TableRow>
               ))}
