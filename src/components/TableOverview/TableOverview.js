@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { getCoinList, getMoreCoinList } from "../../store/coinList/coinListActions";
+import { useNavigate } from "react-router-dom";
+import {
+  getCoinList,
+  getMoreCoinList,
+} from "../../store/coinList/coinListActions";
 import { convertedNumber } from "../../utils/convertedNumber";
 import SparklineChart from "../SparklineChart/SparklineChart";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -43,6 +47,17 @@ const TableData = styled.td`
   @media (max-width: 1000px) {
     font-size: 10px;
   }
+`;
+
+const TableDataName = styled.td`
+  color: #ffffff;
+  font-size: 19px;
+  text-align: center;
+  @media (max-width: 1000px) {
+    font-size: 10px;
+  }
+  cursor: pointer;
+  text-decoration: underline;
 `;
 
 const TableDataColored = styled.td`
@@ -118,39 +133,48 @@ const ChartContainer = styled.div`
 
 export default function TableOverview(props) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(getCoinList());
     //eslint-disable-next-line
   }, []);
+
+  const handleNameClick = (coin) => {
+    navigate(`/coin/${coin.id}`);
+  };
   return (
     <>
       <Heading>Your Overview</Heading>
-      {props.coinList.coins.length > 0 &&   <InfiniteScroll dataLength={props.coinList.coins.length}
-      next={() => dispatch(getMoreCoinList())}
-      hasMore={props.coinList.hasMore}>
-        <TableContainer>
-          <CoinTable>
-            <thead>
-              <TableHeadingRow>
-                <th>#</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>1h%</th>
-                <th>24h%</th>
-                <th>7d%</th>
-                <th>24h Volume/Market Cap</th>
-                <th>Circulating/Total Supply</th>
-                <th>Last 7d</th>
-              </TableHeadingRow>
-            </thead>
-            <tbody>
+      {props.coinList.coins.length > 0 && (
+        <InfiniteScroll
+          dataLength={props.coinList.coins.length}
+          next={() => dispatch(getMoreCoinList())}
+          hasMore={props.coinList.hasMore}
+        >
+          <TableContainer>
+            <CoinTable>
+              <thead>
+                <TableHeadingRow>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>1h%</th>
+                  <th>24h%</th>
+                  <th>7d%</th>
+                  <th>24h Volume/Market Cap</th>
+                  <th>Circulating/Total Supply</th>
+                  <th>Last 7d</th>
+                </TableHeadingRow>
+              </thead>
+              <tbody>
                 {props.coinList.coins.map((coin) => (
                   <TableRow key={coin.id}>
                     <TableData>{coin.market_cap_rank}</TableData>
-                    <TableData>
+                    <TableDataName onClick={() => handleNameClick(coin)}>
                       <CoinIcon src={coin.image} />
                       {coin.name} ({coin.symbol.toUpperCase()})
-                    </TableData>
+                    </TableDataName>
                     <TableData>
                       ${coin.current_price.toLocaleString()}
                     </TableData>
@@ -227,10 +251,11 @@ export default function TableOverview(props) {
                     </TableData>
                   </TableRow>
                 ))}
-            </tbody>
-          </CoinTable>
-        </TableContainer>
-      </InfiniteScroll>}
+              </tbody>
+            </CoinTable>
+          </TableContainer>
+        </InfiniteScroll>
+      )}
     </>
   );
 }

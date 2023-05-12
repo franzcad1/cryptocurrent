@@ -1,10 +1,31 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import styled from "styled-components";
+import CoinSummary from "../../components/CoinSummary/CoinSummary";
 
- class Coin extends Component {
+const CoinPageContainer = styled.div`
+  margin: 25px auto;
+  max-width: 1200px;
+`;
+
+const Heading = styled.p`
+  font-size: 22px;
+  font-weight: 500;
+  font-style: normal;
+  color: #ffffff;
+  margin-top: 70px;
+`;
+
+
+
+class Coin extends Component {
   render() {
     return (
-      <div>Coin</div>
-    )
+      <CoinPageContainer>
+        <Heading>Your summary</Heading>
+        <CoinSummary/>
+        <Heading>Description</Heading>
+      </CoinPageContainer>
+    );
   }
 }
 

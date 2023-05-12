@@ -4,10 +4,7 @@ import styled from "styled-components";
 import BitcoinChart from "../BitcoinChart/BitcoinChart";
 import VolumeChart from "../VolumeChart/VolumeChart";
 import { convertedNumber } from "../../utils/convertedNumber";
-import {
-  getBitcoinData,
-  getBitcoinDataHourly,
-} from "../../store/bitcoin/bitcoinActions";
+import { getBitcoinData } from "../../store/bitcoin/bitcoinActions";
 const Heading = styled.p`
   font-size: 22px;
   font-weight: 500;
@@ -82,7 +79,6 @@ export default function ChartOverview() {
 
   useEffect(() => {
     dispatch(getBitcoinData());
-    dispatch(getBitcoinDataHourly());
     //eslint-disable-next-line
   }, []);
 
@@ -102,7 +98,7 @@ export default function ChartOverview() {
               })}
             </ChartHeading>
           </ChartTextCointainer>
-          <BitcoinChart data={data}/>
+          <BitcoinChart data={data} />
         </Chart>
         <Chart>
           <ChartTextCointainer>
@@ -116,7 +112,7 @@ export default function ChartOverview() {
               })}
             </ChartHeading>
           </ChartTextCointainer>
-          <VolumeChart data={dataHourly}/>
+          <VolumeChart data={dataHourly} />
         </Chart>
       </ChartsContainer>
     </>
