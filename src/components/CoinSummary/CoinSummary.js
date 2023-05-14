@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import styled from "styled-components";
 import { Link45deg, Stack, PlusSquareFill } from "styled-icons/bootstrap";
 import { DownArrow } from "@styled-icons/boxicons-regular";
@@ -8,7 +8,6 @@ const SummaryContainer = styled.div`
   gap: 60px;
   justify-content: space-between;
 `;
-
 
 const CoinLink = styled.div`
   height: 64px;
@@ -24,6 +23,7 @@ const CoinLink = styled.div`
   justify-content: center;
   gap: 5px;
   border-radius: 15px;
+  cursor: pointer;
 `;
 
 const CoinInfo = styled.div`
@@ -34,7 +34,6 @@ const CoinInfo = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `;
-
 
 const LeftContainer = styled.div`
   height: 64px;
@@ -50,7 +49,7 @@ const MiddleContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 25px;
+  gap: 15px;
   border-radius: 15px;
 `;
 
@@ -127,20 +126,16 @@ const PriceContainer = styled.div`
   font-weight: normal;
   font-style: normal;
   text-align: center;
-  color: #00fc2a;
+  color: ${(props) => props.color};
   margin-top: 35px;
 `;
-const ProfitContainer = styled.div`
-  font-size: 18px;
+
+const Percentage = styled.p`
+  font-size: 19px;
   font-weight: normal;
   font-style: normal;
   text-align: center;
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  line-height: 0;
+  color: ${(props) => props.color};
 `;
 
 const AllTimeContainer = styled.div`
@@ -160,13 +155,6 @@ const Price = styled.h1`
   line-height: 0;
 `;
 
-const Profit = styled.p`
-  font-size: 19px;
-  font-weight: normal;
-  font-style: normal;
-  text-align: center;
-  color: #00fc2a;
-`;
 
 const DateTime = styled.p`
   font-size: 18px;
@@ -204,81 +192,144 @@ const CenteredDiv = styled.div`
   margin-left: 50px;
   width: 90%;
 `;
-export default function CoinSummary() {
+export default function CoinSummary(props) {
+  const { coinData } = props.coin;
+  
+  const formatDate = (date) => {
+    const formattedDate = new Date(date);
+    return formattedDate.toLocaleString();
+  };
+
+  const openNewTab = (url) => {
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <SummaryContainer>
-    <CoinInfo>
-      <LeftContainer>
-        <IconContainer>
-          <Icon src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579" />
-        </IconContainer>
-        <CoinName>Bitcoin (BTC)</CoinName>
-      </LeftContainer>
-      <CoinLink>
-        <LinkIcon />
-        www.bitcoin.org
-      </CoinLink>
-    </CoinInfo>
-    <MiddleContainer>
-      <NumbersContainer>
-        <PriceContainer>
-          <Price>$40,017</Price>
-          <IconWithTextContainer>
-            <UpIcon />
-            5%
-          </IconWithTextContainer>
-        </PriceContainer>
-        <ProfitContainer>
-          Profit: <Profit>$1,504</Profit>
-        </ProfitContainer>
-      </NumbersContainer>
-      <StackIcon />
-      <IconWithTextContainer>
-        <ArrowContainer>
-          <UpIcon />
-        </ArrowContainer>
-        <AllTimeContainer>
-          All Time High: $64,805
-          <DateTime>{new Date().toLocaleString()}</DateTime>
-        </AllTimeContainer>
-      </IconWithTextContainer>
-      <IconWithTextContainer>
-        <ArrowContainer>
-          <DownIcon />
-        </ArrowContainer>
-        <AllTimeContainer>
-          All Time Low: $32,805
-          <DateTime>{new Date().toLocaleString()}</DateTime>
-        </AllTimeContainer>
-      </IconWithTextContainer>
-    </MiddleContainer>
-    <RightContainer>
-      <CenteredDiv>
-        <IconWithTextContainer>
-          <PlusIcon /> Market Cap: $749,864,345,056 2.44%
-        </IconWithTextContainer>
-        <IconWithTextContainer>
-          <PlusIcon /> Fully Diluted Valuation: $840,523,040,085
-        </IconWithTextContainer>
-        <IconWithTextContainer>
-          <PlusIcon /> Volume 24h: $47,714,337,481
-        </IconWithTextContainer>
-        <IconWithTextContainer>
-          <PlusIcon /> Volume / Market: 0.06363
-        </IconWithTextContainer>
-      </CenteredDiv>
-      <CenteredDiv>
-        <IconWithTextContainer>
-          <PlusIcon /> Total Volume: 1,192,352 BTC
-        </IconWithTextContainer>
-        <IconWithTextContainer>
-          <PlusIcon /> Circulating Supply: 18,734,943 BTC
-        </IconWithTextContainer>
-        <IconWithTextContainer>
-          <PlusIcon /> Max Supply: 21,000,000 BTC
-        </IconWithTextContainer>
-      </CenteredDiv>
-    </RightContainer>
-  </SummaryContainer>
-  )
+      {coinData && (
+        <>
+          <CoinInfo>
+            <LeftContainer>
+              <IconContainer>
+                <Icon src={coinData.image.large} />
+              </IconContainer>
+              <CoinName>
+                {coinData.name} ({coinData.symbol.toUpperCase()})
+              </CoinName>
+            </LeftContainer>
+            <CoinLink onClick={() => openNewTab(coinData.links.homepage[0])}>
+              <LinkIcon />
+              {coinData.links.homepage[0].replace(/^https?:\/\//, "")}
+            </CoinLink>
+          </CoinInfo>
+          <MiddleContainer>
+            <NumbersContainer>
+              <PriceContainer>
+                <Price>
+                  ${coinData.market_data.current_price.cad.toLocaleString()}
+                </Price>
+                <IconWithTextContainer>
+                  {coinData.market_data.price_change_percentage_24h_in_currency
+                    .cad > 0 ? (
+                    <UpIcon />
+                  ) : (
+                    <DownIcon />
+                  )}
+                  {coinData.market_data.price_change_percentage_24h_in_currency
+                    .cad > 0 ? (
+                    <Percentage color="#00fc2a">
+                      {coinData.market_data.price_change_percentage_24h_in_currency.cad.toFixed(
+                        2
+                      )}
+                      %
+                    </Percentage>
+                  ) : (
+                    <Percentage color="#fe1040">
+                      {coinData.market_data.price_change_percentage_24h_in_currency.cad.toFixed(
+                        2
+                      )}
+                      %
+                    </Percentage>
+                  )}
+                </IconWithTextContainer>
+              </PriceContainer>
+            </NumbersContainer>
+            <StackIcon />
+            <IconWithTextContainer>
+              <ArrowContainer>
+                <UpIcon />
+              </ArrowContainer>
+              <AllTimeContainer>
+                All Time High: ${coinData.market_data.ath.cad.toLocaleString()}
+                <DateTime>
+                  {formatDate(coinData.market_data.ath_date.cad)}
+                </DateTime>
+              </AllTimeContainer>
+            </IconWithTextContainer>
+            <IconWithTextContainer>
+              <ArrowContainer>
+                <DownIcon />
+              </ArrowContainer>
+              <AllTimeContainer>
+                All Time Low: ${coinData.market_data.atl.cad.toLocaleString()}
+                <DateTime>
+                  {formatDate(coinData.market_data.atl_date.cad)}
+                </DateTime>
+              </AllTimeContainer>
+            </IconWithTextContainer>
+          </MiddleContainer>
+          <RightContainer>
+            <CenteredDiv>
+              <IconWithTextContainer>
+                <PlusIcon /> Market Cap: $
+                {coinData.market_data.market_cap.cad.toLocaleString()}
+              </IconWithTextContainer>
+              <IconWithTextContainer>
+                <PlusIcon /> Fully Diluted Valuation: $
+                {coinData.market_data.fully_diluted_valuation.cad.toLocaleString()}
+              </IconWithTextContainer>
+              <IconWithTextContainer>
+                <PlusIcon /> Volume 24h: $
+                {coinData.market_data.total_volume.cad.toLocaleString()}
+              </IconWithTextContainer>
+              <IconWithTextContainer>
+                <PlusIcon /> Volume / Market:{" "}
+                {(
+                  coinData.market_data.total_volume.cad /
+                  coinData.market_data.market_cap.cad
+                ).toFixed(5)}
+              </IconWithTextContainer>
+            </CenteredDiv>
+            <CenteredDiv>
+              <IconWithTextContainer>
+                <PlusIcon /> Total Volume:{" "}
+                {coinData.market_data.total_volume[coinData.symbol] ? (
+                  <>
+                    {coinData.market_data.total_volume[
+                      coinData.symbol
+                    ].toLocaleString()}{" "}
+                    {coinData.symbol.toUpperCase()}
+                  </>
+                ) : (
+                  <>${coinData.market_data.total_volume.cad.toLocaleString()}</>
+                )}
+              </IconWithTextContainer>
+              <IconWithTextContainer>
+                <PlusIcon /> Circulating Supply:{" "}
+                {coinData.market_data.circulating_supply.toLocaleString()}{" "}
+                {coinData.symbol.toUpperCase()}
+              </IconWithTextContainer>
+              <IconWithTextContainer>
+                <PlusIcon /> Max Supply:{" "}
+                {coinData.market_data.max_supply
+                  ? coinData.market_data.max_supply.toLocaleString()
+                  : 0}{" "}
+                {coinData.symbol.toUpperCase()}
+              </IconWithTextContainer>
+            </CenteredDiv>
+          </RightContainer>
+        </>
+      )}
+    </SummaryContainer>
+  );
 }

@@ -16,7 +16,6 @@ const initialState = {
 };
 
 function coinListReducer(state = initialState, action) {
-  console.log(action.type)
   switch (action.type) {
     case GET_COINS_PENDING:
       return {

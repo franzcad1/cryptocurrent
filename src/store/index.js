@@ -2,11 +2,13 @@ import { compose, combineReducers, createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import bitcoinReducer from "./bitcoin/bitcoinReducer";
 import coinListReducer from "./coinList/coinListReducer";
+import coinReducer from "./coin/coinReducer";
 
 
 const reducers = combineReducers({
     bitcoin: bitcoinReducer,
-    coinList: coinListReducer
+    coinList: coinListReducer,
+    coin: coinReducer
 });
 
 const composeEnhancers =
