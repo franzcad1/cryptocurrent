@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { openNewTab } from "../../utils/openNewTab";
 import { Link45deg, Stack, PlusSquareFill } from "styled-icons/bootstrap";
 import { DownArrow } from "@styled-icons/boxicons-regular";
 
@@ -200,9 +201,7 @@ export default function CoinSummary(props) {
     return formattedDate.toLocaleString();
   };
 
-  const openNewTab = (url) => {
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
+
 
   return (
     <SummaryContainer>

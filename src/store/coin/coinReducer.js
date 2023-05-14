@@ -1,9 +1,15 @@
-import { GET_COIN_PENDING, GET_COIN_SUCCESS, GET_COIN_ERROR } from "./coinTypes";
+import {
+  GET_COIN_PENDING,
+  GET_COIN_SUCCESS,
+  GET_COIN_ERROR,
+  CHANGE_RANGE
+} from "./coinTypes";
 const initialState = {
   coinData: null,
   chartData: null,
   isLoading: false,
   hasError: false,
+  range: "1",
 };
 
 function coinReducer(state = initialState, action) {
@@ -24,6 +30,11 @@ function coinReducer(state = initialState, action) {
         ...state,
         isLoading: false,
         hasError: true,
+      };
+    case CHANGE_RANGE:
+      return {
+        ...state,
+        range: action.payload
       };
     default:
       return state;

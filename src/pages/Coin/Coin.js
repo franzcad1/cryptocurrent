@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import CoinSummary from "../../components/CoinSummary/CoinSummary";
+import CoinChart from "../../components/CoinChart/CoinChart";
 import { openNewTab } from "../../utils/openNewTab";
 import styled from "styled-components";
 import { Stack, Link45deg } from "styled-icons/bootstrap";
 import { Copy } from "styled-icons/boxicons-regular";
 import { Swap } from "styled-icons/entypo";
 import { useDispatch, useSelector } from "react-redux";
-import { getCoin } from "../../store/coin/coinActions";
-
+import { changeRange, getCoin } from "../../store/coin/coinActions";
 
 const CoinPageContainer = styled.div`
   margin: 25px auto;
@@ -205,100 +205,138 @@ export default function Coin() {
   const dispatch = useDispatch();
   const { coinID } = useParams();
   const coin = useSelector((state) => state.coin);
+  const { range } = coin;
 
   useEffect(() => {
-    dispatch(getCoin(coinID, 1));
+    dispatch(getCoin(coinID));
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    dispatch(getCoin(coinID));
+    // eslint-disable-next-line
+  }, [range]);
+
+  const handleRangeChange = (e) => {
+    dispatch(changeRange(e.target.value));
+  };
+
   return (
-    <CoinPageContainer>
-      {coin.coinData && (
+    <>
+      <CoinPageContainer>
+        {coin.coinData && (
+          <>
+            <Heading>Your summary</Heading>
+            <CoinSummary coin={coin} />
+
+            {coin.coinData.description.en !== "" && (
+              <>
+                <Heading>Description</Heading>
+                <DescriptionContainer>
+                  <StackIcon />
+                  <CoinDescription
+                    dangerouslySetInnerHTML={{
+                      __html: coin.coinData.description.en,
+                    }}
+                  ></CoinDescription>
+                </DescriptionContainer>
+              </>
+            )}
+            <LinksContainer>
+              <Link
+                onClick={() =>
+                  openNewTab(coin.coinData.links.blockchain_site[0])
+                }
+              >
+                <LinkIcon />
+                {coin.coinData.links.blockchain_site[0].replace(
+                  /^https?:\/\//,
+                  ""
+                )}
+                <CopyIcon />
+              </Link>
+              <Link
+                onClick={() =>
+                  openNewTab(coin.coinData.links.blockchain_site[1])
+                }
+              >
+                <LinkIcon />
+                {coin.coinData.links.blockchain_site[1].replace(
+                  /^https?:\/\//,
+                  ""
+                )}
+                <CopyIcon />
+              </Link>
+              <Link
+                onClick={() =>
+                  openNewTab(coin.coinData.links.blockchain_site[1])
+                }
+              >
+                <LinkIcon />
+                {coin.coinData.links.blockchain_site[2].replace(
+                  /^https?:\/\//,
+                  ""
+                )}
+                <CopyIcon />
+              </Link>
+            </LinksContainer>
+            <RangeContainer onChange={(e) => handleRangeChange(e)}>
+              <Label id="1d">
+                <Input
+                  type="radio"
+                  name="range"
+                  id="1d"
+                  value="1"
+                  defaultChecked
+                />
+                <RadioBox></RadioBox>
+                <Paragraph>1d</Paragraph>
+              </Label>
+              <Label id="7d">
+                <Input type="radio" name="range" id="7d" value="7" />
+                <RadioBox></RadioBox>
+                <Paragraph>7d</Paragraph>
+              </Label>
+              <Label id="30d">
+                <Input type="radio" name="range" id="30d" value="30" />
+                <RadioBox></RadioBox>
+                <Paragraph>30d</Paragraph>
+              </Label>
+              <Label id="90d">
+                <Input type="radio" name="range" id="90d" value="90" />
+                <RadioBox></RadioBox>
+                <Paragraph>90d</Paragraph>
+              </Label>
+              <Label id="1y">
+                <Input type="radio" name="range" id="1y" value="365" />
+                <RadioBox></RadioBox>
+                <Paragraph>1y</Paragraph>
+              </Label>
+              <Label id="Max">
+                <Input type="radio" name="range" id="Max" value="max" />
+                <RadioBox></RadioBox>
+                <Paragraph>Max</Paragraph>
+              </Label>
+            </RangeContainer>
+            <ConvertContainer>
+              <InputContainer>
+                <ConvertLabel>CAD</ConvertLabel>
+                <StyledInput />
+              </InputContainer>
+              <SwapIcon />
+              <InputContainer>
+                <ConvertLabel>BTC</ConvertLabel>
+                <StyledInput />
+              </InputContainer>
+            </ConvertContainer>
+          </>
+        )}
+      </CoinPageContainer>
+      {coin.chartData && (
         <>
-          <Heading>Your summary</Heading>
-          <CoinSummary coin={coin} />
-          <Heading>Description</Heading>
-          {coin.coinData.description && (
-            <DescriptionContainer>
-              <StackIcon />
-              <CoinDescription
-                dangerouslySetInnerHTML={{
-                  __html: coin.coinData.description.en,
-                }}
-              ></CoinDescription>
-            </DescriptionContainer>
-          )}
-          <LinksContainer>
-            <Link onClick={() => openNewTab(coin.coinData.links.blockchain_site[0])}>
-              <LinkIcon />
-              {coin.coinData.links.blockchain_site[0].replace(
-                /^https?:\/\//,
-                ""
-              )}
-              <CopyIcon />
-            </Link>
-            <Link onClick={() => openNewTab(coin.coinData.links.blockchain_site[1])}>
-              <LinkIcon />
-              {coin.coinData.links.blockchain_site[1].replace(
-                /^https?:\/\//,
-                ""
-              )}
-              <CopyIcon />
-            </Link>
-            <Link onClick={() => openNewTab(coin.coinData.links.blockchain_site[1])}>
-              <LinkIcon />
-              {coin.coinData.links.blockchain_site[2].replace(
-                /^https?:\/\//,
-                ""
-              )}
-              <CopyIcon />
-            </Link>
-          </LinksContainer>
-          <RangeContainer>
-            <Label id="1d">
-              <Input type="radio" name="range" id="1d" value="1d" />
-              <RadioBox></RadioBox>
-              <Paragraph>1d</Paragraph>
-            </Label>
-            <Label id="7d">
-              <Input type="radio" name="range" id="7d" value="7d" />
-              <RadioBox></RadioBox>
-              <Paragraph>7d</Paragraph>
-            </Label>
-            <Label id="30d">
-              <Input type="radio" name="range" id="30d" value="30d" />
-              <RadioBox></RadioBox>
-              <Paragraph>30d</Paragraph>
-            </Label>
-            <Label id="90d">
-              <Input type="radio" name="range" id="90d" value="90d" />
-              <RadioBox></RadioBox>
-              <Paragraph>90d</Paragraph>
-            </Label>
-            <Label id="1y">
-              <Input type="radio" name="range" id="1y" value="1y" />
-              <RadioBox></RadioBox>
-              <Paragraph>1y</Paragraph>
-            </Label>
-            <Label id="Max">
-              <Input type="radio" name="range" id="Max" value="Max" />
-              <RadioBox></RadioBox>
-              <Paragraph>Max</Paragraph>
-            </Label>
-          </RangeContainer>
-          <ConvertContainer>
-            <InputContainer>
-              <ConvertLabel>CAD</ConvertLabel>
-              <StyledInput />
-            </InputContainer>
-            <SwapIcon />
-            <InputContainer>
-              <ConvertLabel>BTC</ConvertLabel>
-              <StyledInput />
-            </InputContainer>
-          </ConvertContainer>
+          <CoinChart chartData={coin.chartData} />
         </>
       )}
-    </CoinPageContainer>
+    </>
   );
 }

@@ -3,9 +3,12 @@ import {
   GET_COIN_PENDING,
   GET_COIN_SUCCESS,
   GET_COIN_ERROR,
+  CHANGE_RANGE,
 } from "./coinTypes";
 
-export const getCoin = (id, range) => async (dispatch, getState) => {
+export const getCoin = (id) => async (dispatch, getState) => {
+  const state = getState();
+  const range = state.coin.range;
   try {
     dispatch({ type: GET_COIN_PENDING });
     const { data } = await axios(
@@ -24,4 +27,8 @@ export const getCoin = (id, range) => async (dispatch, getState) => {
   } catch (err) {
     dispatch({ type: GET_COIN_ERROR });
   }
+};
+
+export const changeRange = (newRange) => (dispatch, getState) => {
+  dispatch({ type: CHANGE_RANGE, payload: newRange });
 };

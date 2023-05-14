@@ -1,3 +1,4 @@
 export const GET_COIN_ERROR = 'GET_COIN_ERROR';
 export const GET_COIN_PENDING = 'GET_COIN_PENDING';
 export const GET_COIN_SUCCESS = 'GET_COIN_SUCCESS';
+export const CHANGE_RANGE = 'CHANGE_RANGE';
