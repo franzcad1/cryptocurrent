@@ -1,11 +1,12 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
 import { DarkTheme } from "@styled-icons/fluentui-system-regular";
 import { DownArrow } from "@styled-icons/boxicons-regular";
 import { CurrencyDollar } from "styled-icons/bootstrap";
 import { SearchAlt } from "styled-icons/boxicons-regular";
 import MarketDataBar from "../MarketDataBar/MarketDataBar";
+
 const MainContainer = styled.div`
   margin: auto;
   display: flex;
@@ -16,6 +17,7 @@ const MainContainer = styled.div`
 `;
 const PagesContainer = styled.div`
   display: flex;
+  margin-left: 30px;
 `;
 
 const UtilsContainer = styled.div`
@@ -52,7 +54,7 @@ const CurrencyIcon = styled.div`
 `;
 const Page = styled.div`
   display: flex;
-  width: 167px;
+  width: 140px;
   height: 57px;
   border-radius: 25px;
   background: #191b1f;
@@ -119,13 +121,34 @@ const DollarIcon = styled(CurrencyDollar)`
   width: 20px;
   height: 30px;
 `;
+
+const StyledLink = styled(NavLink)`
+  text-decoration: none;
+  color: #fafbfb;
+  font-weight: 500;
+  font-size: 23px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  &.${(props) => props.activeClassName} {
+    background-color: #2c2f36;
+  }
+`;
 export default function Navbar() {
   return (
     <>
       <MainContainer>
         <PagesContainer>
-          <Page>Coins</Page>
-          <Page>Portfolio</Page>
+          <Page>
+            <StyledLink to="/"  activeClassName="active">Coins</StyledLink>
+          </Page>
+          <Page>
+            <StyledLink to="/portfolio" activeClassName="active">Portfolio</StyledLink>
+          </Page>
         </PagesContainer>
         <UtilsContainer>
           <SearchContainer>

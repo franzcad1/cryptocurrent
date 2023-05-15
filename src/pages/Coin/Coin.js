@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import CoinSummary from "../../components/CoinSummary/CoinSummary";
 import CoinChart from "../../components/CoinChart/CoinChart";
@@ -9,6 +9,7 @@ import { Copy } from "styled-icons/boxicons-regular";
 import { Swap } from "styled-icons/entypo";
 import { useDispatch, useSelector } from "react-redux";
 import { changeRange, getCoin } from "../../store/coin/coinActions";
+import { SettingsInputComponent } from "styled-icons/material";
 
 const CoinPageContainer = styled.div`
   margin: 25px auto;
@@ -201,16 +202,40 @@ const CoinDescription = styled.p`
   color: #ffffff;
 `;
 
+function usePrevious(value) {
+  const prevRef = useRef();
+  useEffect(() => {
+    prevRef.current = value;
+  }, [value]);
+  return prevRef.current;
+}
+
 export default function Coin() {
   const dispatch = useDispatch();
   const { coinID } = useParams();
   const coin = useSelector((state) => state.coin);
+  const prevCoin = usePrevious(coin);
   const { range } = coin;
+
+  const [currencyVal, setCurrencyVal] = useState(0);
+  const [cryptoVal, setCryptoVal] = useState(1);
 
   useEffect(() => {
     dispatch(getCoin(coinID));
+    if (coin) {
+      setCurrencyVal(coin.coinData.market_data.current_price.cad);
+    }
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (coin) {
+      if (coin !== prevCoin) {
+        setCurrencyVal(coin.coinData.market_data.current_price.cad);
+      }
+    }
+    // eslint-disable-next-line
+  }, [coin]);
 
   useEffect(() => {
     dispatch(getCoin(coinID));
@@ -219,6 +244,18 @@ export default function Coin() {
 
   const handleRangeChange = (e) => {
     dispatch(changeRange(e.target.value));
+  };
+
+  const handleCryptoChange = (e) => {
+    setCryptoVal(e.target.value);
+    setCurrencyVal(
+      e.target.value * coin.coinData.market_data.current_price.cad
+    );
+  };
+
+  const handleCurrencyChange = (e) => {
+    setCurrencyVal(e.target.value);
+    setCryptoVal(e.target.value / coin.coinData.market_data.current_price.cad);
   };
 
   return (
@@ -320,13 +357,23 @@ export default function Coin() {
             </RangeContainer>
             <ConvertContainer>
               <InputContainer>
-                <ConvertLabel>CAD</ConvertLabel>
-                <StyledInput />
+                <ConvertLabel>
+                  {coin.coinData.symbol.toUpperCase()}
+                </ConvertLabel>
+                <StyledInput
+                  type="text"
+                  value={cryptoVal}
+                  onChange={(e) => handleCryptoChange(e)}
+                />
               </InputContainer>
               <SwapIcon />
               <InputContainer>
-                <ConvertLabel>BTC</ConvertLabel>
-                <StyledInput />
+                <ConvertLabel>CAD</ConvertLabel>
+                <StyledInput
+                  type="text"
+                  value={currencyVal}
+                  onChange={(e) => handleCurrencyChange(e)}
+                />
               </InputContainer>
             </ConvertContainer>
           </>
