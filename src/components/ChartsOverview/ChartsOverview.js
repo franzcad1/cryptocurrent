@@ -1,66 +1,18 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import styled from "styled-components";
 import BitcoinChart from "../BitcoinChart/BitcoinChart";
 import VolumeChart from "../VolumeChart/VolumeChart";
 import { convertedNumber } from "../../utils/convertedNumber";
 import { getBitcoinData } from "../../store/bitcoin/bitcoinActions";
-const Heading = styled.p`
-  font-size: 22px;
-  font-weight: 500;
-  font-style: normal;
-  color: #ffffff;
-`;
+import {
+  Heading,
+  ChartHeading,
+  ChartsContainer,
+  Chart,
+  BigText,
+  ChartTextCointainer,
+} from "./ChartsOverview.styles";
 
-const ChartHeading = styled.p`
-  font-size: 22px;
-  font-weight: 500;
-  font-style: normal;
-  color: #ffffff;
-  line-height: 1px;
-  margin-bottom: 0px;
-`;
-
-const ChartsContainer = styled.div`
-  display: flex;
-  gap: 46px;
-  justify-content: center;
-`;
-
-const Chart = styled.div`
-  width: 500px;
-  background: #191b1f;
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column;
-  padding: 15px;
-
-  @media (max-width: 767px) {
-    width: 400px;
-  }
-  @media (max-width: 1200px) {
-    width: 450px;
-  }
-  @media (max-width: 1100px) {
-    width: 380px;
-  }
-  @media (max-width: 950px) {
-    width: 300px;
-`;
-
-const BigText = styled.p`
-  font-size: 44px;
-  font-weight: normal;
-  font-style: normal;
-  color: #ffffff;
-  line-height: 1px;
-  margin-bottom: 45px;
-  margin-left: 7px;
-`;
-
-const ChartTextCointainer = styled.div`
-  margin-bottom: 50px;
-`;
 export default function ChartOverview() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.bitcoin.data);

@@ -1,62 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styled from "styled-components";
-import { DownArrow } from "@styled-icons/boxicons-regular";
-import ProgressBar from "../ProgressBar/ProgressBar";
 import { convertedNumber } from "../../utils/convertedNumber";
-
-const MainContainer = styled.div`
-  margin: 0px auto;
-  max-width: 906px;
-  height: 55px;
-  background: #191b1f;
-  border-radius: 0 0 10px 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-`;
-
-const TextContainer = styled.div`
-  font-size: 17px;
-  font-weight: normal;
-  font-style: normal;
-  color: #ffffff;
-`;
-
-const TextWithBarContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 17px;
-  font-weight: normal;
-  font-style: normal;
-  color: #ffffff;
-  gap: 7px;
-`;
-
-const CoinIcon = styled.img`
-  width: 20px;
-  height: 20px;
-`;
-
-const DownIcon = styled(DownArrow)`
-  color: red;
-  width: 10px;
-  height: 10px;
-  margin-left: 5px;
-`;
-
-const UpIcon = styled(DownArrow)`
-  color: #00ff5f;
-  width: 10px;
-  height: 10px;
-  transform: rotate(180deg);
-  margin-left: 5px;
-`;
+import ProgressBar from "../ProgressBar/ProgressBar";
+import {
+  MainContainer,
+  TextContainer,
+  TextWithBarContainer,
+  CoinIcon,
+  DownIcon,
+  UpIcon,
+} from "./MarketDataBar.styles";
 export default function MarketDataBar() {
   const [globalData, setGlobalData] = useState(null);
 
- 
   const getGlobalData = async () => {
     try {
       const { data } = await axios(`https://api.coingecko.com/api/v3/global`);

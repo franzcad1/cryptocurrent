@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -22,7 +21,6 @@ ChartJS.register(
   Legend,
   Filler
 );
-
 
 export default function SparklineChart(props) {
   const options = {

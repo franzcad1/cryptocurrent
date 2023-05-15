@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import {
   getCoinList,
@@ -9,128 +8,23 @@ import {
 import { convertedNumber } from "../../utils/convertedNumber";
 import SparklineChart from "../SparklineChart/SparklineChart";
 import InfiniteScroll from "react-infinite-scroll-component";
-
-const Heading = styled.p`
-  font-size: 22px;
-  font-weight: 500;
-  font-style: normal;
-  color: #ffffff;
-  margin-top: 70px;
-`;
-
-const CoinTable = styled.table`
-  text-align: center;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  background: #191b1f;
-  border-radius: 15px;
-  border-collapse: collapse;
-  color: #ffffff;
-  @media (max-width: 1000px) {
-    font-size: 13px;
-  }
-`;
-
-const TableContainer = styled.div`
-  margin: auto;
-  padding: 20px;
-  background: #191b1f;
-  border-radius: 15px;
-  max-width: 1712px;
-`;
-
-const TableData = styled.td`
-  color: #ffffff;
-  font-size: 19px;
-  text-align: center;
-  @media (max-width: 1000px) {
-    font-size: 10px;
-  }
-`;
-
-const TableDataName = styled.td`
-  color: #ffffff;
-  font-size: 19px;
-  text-align: center;
-  @media (max-width: 1000px) {
-    font-size: 10px;
-  }
-  cursor: pointer;
-  text-decoration: underline;
-`;
-
-const TableDataColored = styled.td`
-  color: ${(props) => props.color};
-  font-size: 19px;
-  text-align: center;
-  @media (max-width: 1000px) {
-    font-size: 10px;
-  }
-`;
-
-const TableRow = styled.tr`
-  height: 100px;
-  border-bottom: 0.5px solid #2c2f36;
-`;
-
-const TableHeadingRow = styled.tr`
-  height: 30px;
-`;
-
-const FullBar = styled.div`
-  display: flex;
-  flex: 1 1 0%;
-  width: 100%;
-  height: 8px;
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: #2172e5;
-`;
-
-export const PartialBar = styled.div`
-  height: 100%;
-  width: ${(props) => props.width}%;
-  border-radius: 8px;
-  background-color: #ffffff;
-`;
-
-const BarContainer = styled.div`
-  width: 269px;
-  margin: auto;
-  @media (min-width: 1200px) {
-    width: 180px;
-  }
-`;
-
-const BarInfo = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: auto 5px 5px auto;
-`;
-
-const BarText = styled.p`
-  line-height: 0px;
-  font-size: 16px;
-  @media (max-width: 1000px) {
-    font-size: 13px;
-  }
-`;
-
-const CoinIcon = styled.img`
-  width: 20px;
-  margin-right: 7px;
-`;
-
-const ChartContainer = styled.div`
-  width: 150px;
-  height: 60px;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
+import {
+  Heading,
+  CoinTable,
+  TableContainer,
+  TableData,
+  TableDataName,
+  TableDataColored,
+  TableRow,
+  TableHeadingRow,
+  FullBar,
+  PartialBar,
+  BarContainer,
+  BarInfo,
+  BarText,
+  CoinIcon,
+  ChartContainer,
+} from "./TableOverview.styles";
 export default function TableOverview(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
