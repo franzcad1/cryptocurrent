@@ -25,6 +25,7 @@ import {
       } catch (err) {
         dispatch({
             type: GET_COINS_ERROR,
+            payload: err
         });
       }
   }
@@ -49,7 +50,8 @@ import {
       } catch (err) {
         dispatch({
             type: GET_MORE_COINS_ERROR,
+            payload: err
         });
-        console.log(err)
+
       }
   }

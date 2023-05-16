@@ -12,7 +12,8 @@ const initialState = {
     isLoading: false,
     hasError: false,
     page: 1,
-    hasMore: true
+    hasMore: true,
+    error: null
 };
 
 function coinListReducer(state = initialState, action) {
@@ -21,38 +22,44 @@ function coinListReducer(state = initialState, action) {
       return {
         ...state,
         isLoading: true,
+        hasError: false,
       };
     case GET_COINS_SUCCESS:
       return {
         ...state,
         coins: action.payload,
         isLoading: false,
+        hasError: false,
       };
     case GET_COINS_ERROR:
       return {
         ...state,
         isLoading: false,
         hasError: true,
+        error: action.payload
       };
       case GET_MORE_COINS_PENDING:
         return {
           ...state,
           isLoading: true,
-          hasMore: true
+          hasMore: true,
+          hasError: false,
         };
       case GET_MORE_COINS_SUCCESS:
         return {
           ...state,
           ...action.payload,
           isLoading: false,
-          hasMore: true
+          hasMore: true,
+          hasError: false,
         };
       case GET_MORE_COINS_ERROR:
         return {
           ...state,
           isLoading: false,
           hasError: true,
-          hasMore: false
+          hasMore: false,
+          error: action.payload
         };
     default:
       return state;
