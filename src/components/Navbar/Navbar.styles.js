@@ -5,7 +5,6 @@ import { DownArrow } from "@styled-icons/boxicons-regular";
 import { CurrencyDollar } from "styled-icons/bootstrap";
 import { SearchAlt } from "styled-icons/boxicons-regular";
 
-
 export const MainContainer = styled.div`
   margin: auto;
   display: flex;
@@ -136,4 +135,28 @@ export const StyledLink = styled(NavLink)`
   &.${(props) => props.activeClassName} {
     background-color: #2c2f36;
   }
+`;
+
+export const ResultModal = styled.div`
+  border-radius: 0 0 15px 15px;
+  background: #191b1f;
+  width: 250px;
+  max-height: 125px;
+  overflow: auto;
+  position: absolute;
+  right: 275px;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+export const ResultContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  cursor: pointer;
 `;
