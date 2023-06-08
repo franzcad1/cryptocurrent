@@ -5,7 +5,7 @@ export const MainContainer = styled.div`
   margin: 0px auto;
   max-width: 906px;
   height: 55px;
-  background: #191b1f;
+  background: ${props => props.theme.background};
   border-radius: 0 0 10px 10px;
   display: flex;
   align-items: center;
@@ -16,7 +16,7 @@ export const TextContainer = styled.div`
   font-size: 17px;
   font-weight: normal;
   font-style: normal;
-  color: #ffffff;
+  color: ${props => props.theme.main};
 `;
 
 export const TextWithBarContainer = styled.div`
@@ -26,7 +26,7 @@ export const TextWithBarContainer = styled.div`
   font-size: 17px;
   font-weight: normal;
   font-style: normal;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   gap: 7px;
 `;
 

@@ -9,6 +9,6 @@ export const Heading = styled.p`
   font-size: 22px;
   font-weight: 500;
   font-style: normal;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   margin-top: 70px;
 `;

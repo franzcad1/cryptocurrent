@@ -4,14 +4,14 @@ export const Heading = styled.p`
   font-size: 22px;
   font-weight: 500;
   font-style: normal;
-  color: #ffffff;
+  color: ${props => props.theme.main};
 `;
 
 export const ChartHeading = styled.p`
   font-size: 22px;
   font-weight: 500;
   font-style: normal;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   line-height: 1px;
   margin-bottom: 0px;
 `;
@@ -23,7 +23,7 @@ export const ChartsContainer = styled.div`
 
 export const Chart = styled.div`
   width: 550px;
-  background: #191b1f;
+  background: ${props => props.theme.background};
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -46,7 +46,7 @@ export const BigText = styled.p`
   font-size: 44px;
   font-weight: normal;
   font-style: normal;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   line-height: 1px;
   margin-bottom: 45px;
   margin-left: 7px;

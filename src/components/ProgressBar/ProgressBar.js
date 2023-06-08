@@ -16,7 +16,7 @@ export const PartialBar = styled.div`
   height: 100%;
   border-radius: 8px;
   width: ${(props) => props.width}%;
-  background-color: #ffffff;
+  background-color: ${props => props.theme.main};
 `;
 export default function ProgressBar(props) {
   return (

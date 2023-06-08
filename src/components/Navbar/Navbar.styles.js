@@ -9,7 +9,7 @@ export const MainContainer = styled.div`
   margin: auto;
   display: flex;
   height: 97px;
-  background: #191b1f;
+  background: ${props => props.theme.background};
   align-items: center;
   justify-content: space-between;
 `;
@@ -28,12 +28,12 @@ export const CurrencyContainer = styled.div`
   width: 135px;
   height: 63px;
   border-radius: 12px;
-  background: #2c2f36;
+  background: ${props => props.theme.secondary};
   font-size: 17px;
   font-weight: 500;
   font-style: normal;
   text-align: left;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,7 +55,6 @@ export const Page = styled.div`
   width: 140px;
   height: 57px;
   border-radius: 25px;
-  background: #191b1f;
   color: #fafbfb;
   font-weight: 500;
   font-size: 23px;
@@ -67,7 +66,7 @@ export const Page = styled.div`
 export const SearchContainer = styled.div`
   max-width: 510px;
   height: 63px;
-  background: #2c2f36;
+  background: ${props => props.theme.secondary};
   border-radius: 25px;
   display: flex;
   align-items: center;
@@ -75,12 +74,12 @@ export const SearchContainer = styled.div`
 export const SearchBar = styled.input`
   width: 70%;
   height: 30px;
-  background: #2c2f36;
+  background: ${props => props.theme.secondary};
   font-size: 17px;
   font-weight: 500;
   font-style: normal;
   text-align: left;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   border: 0px;
 `;
 
@@ -88,24 +87,23 @@ export const ThemeContainer = styled.div`
   width: 67px;
   height: 63px;
   border-radius: 12px;
-  background: #2c2f36;
+  background: ${props => props.theme.secondary};
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #ffffff;
 `;
 
 export const ThemeIcon = styled(DarkTheme)`
-  color: #FFFFFF
-  width: 15px;
+  color: ${props => props.theme.main};
+  width: 35px;
   height: 35px;
 `;
 
 export const SearchIcon = styled(SearchAlt)`
   height: 21px;
   width: 21px;
-  color: #fafbfb;
+  color: ${props => props.theme.main};
   margin-left: 20px;
 `;
 export const DownIcon = styled(DownArrow)`
@@ -122,7 +120,7 @@ export const DollarIcon = styled(CurrencyDollar)`
 
 export const StyledLink = styled(NavLink)`
   text-decoration: none;
-  color: #fafbfb;
+  color: ${props => props.theme.main};
   font-weight: 500;
   font-size: 23px;
   display: flex;
@@ -133,7 +131,7 @@ export const StyledLink = styled(NavLink)`
   height: 100%;
   border-radius: 20px;
   &.${(props) => props.activeClassName} {
-    background-color: #2c2f36;
+    background-color: ${props => props.theme.secondary};
   }
 `;
 

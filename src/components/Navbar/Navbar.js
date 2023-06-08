@@ -22,7 +22,7 @@ import {
 } from "./Navbar.styles";
 import { searchCoinData } from "../../store/search/searchActions";
 
-export default function Navbar() {
+export default function Navbar(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const data = useSelector((state) => state.search.data);
@@ -40,10 +40,6 @@ export default function Navbar() {
     }
     setSearchVal(e.target.value);
   };
-
-  useEffect(() => {
-    console.log(data);
-  }, [isModalOpen]);
 
   return (
     <>
@@ -77,7 +73,7 @@ export default function Navbar() {
             CAD
             <DownIcon />
           </CurrencyContainer>
-          <ThemeContainer>
+          <ThemeContainer onClick={() => props.handleThemeChange()}>
             <ThemeIcon />
           </ThemeContainer>
         </UtilsContainer>

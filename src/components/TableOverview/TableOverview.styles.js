@@ -4,7 +4,7 @@ export const Heading = styled.p`
   font-size: 22px;
   font-weight: 500;
   font-style: normal;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   margin-top: 70px;
 `;
 
@@ -13,10 +13,10 @@ export const CoinTable = styled.table`
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  background: #191b1f;
+  background: ${props => props.theme.background};
   border-radius: 15px;
   border-collapse: collapse;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   @media (max-width: 1000px) {
     font-size: 13px;
   }
@@ -25,13 +25,13 @@ export const CoinTable = styled.table`
 export const TableContainer = styled.div`
   margin: auto;
   padding: 20px;
-  background: #191b1f;
+  background: ${props => props.theme.background};
   border-radius: 15px;
   max-width: 1712px;
 `;
 
 export const TableData = styled.td`
-  color: #ffffff;
+  color: ${props => props.theme.main};
   font-size: 19px;
   text-align: center;
   @media (max-width: 1000px) {
@@ -40,7 +40,7 @@ export const TableData = styled.td`
 `;
 
 export const TableDataName = styled.td`
-  color: #ffffff;
+  color: ${props => props.theme.main};
   font-size: 19px;
   text-align: center;
   @media (max-width: 1000px) {
@@ -82,7 +82,7 @@ export const PartialBar = styled.div`
   height: 100%;
   width: ${(props) => props.width}%;
   border-radius: 8px;
-  background-color: #ffffff;
+  background-color: ${props => props.theme.main};
 `;
 
 export const BarContainer = styled.div`
