@@ -12,7 +12,7 @@ export const Heading = styled.p`
   font-size: 22px;
   font-weight: 500;
   font-style: normal;
-  color: #ffffff;
+  color: ${(props) => props.theme.main};
   margin-top: 70px;
 `;
 
@@ -23,31 +23,31 @@ export const DescriptionContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #191b1f;
+  background: ${props => props.theme.background};
   font-size: 19px;
   font-weight: normal;
   font-style: normal;
   text-align: center;
-  color: #ffffff;
+  color: ${(props) => props.theme.main};
   border-radius 15px;
-padding: 20px;
+  padding: 20px;
 `;
 export const StackIcon = styled(Stack)`
   width: 22px;
   height: 22px;
-  color: #ffffff;
+  color: ${(props) => props.theme.main};
 `;
 
 export const SwapIcon = styled(Swap)`
   width: 22px;
   height: 22px;
-  color: #ffffff;
+  color: ${props => props.theme.main};
 `;
 
 export const CopyIcon = styled(Copy)`
   width: 15px;
   height: 15px;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   cursor: pointer;
 `;
 
@@ -70,12 +70,12 @@ export const LinkContainer = styled.div`
   gap: 19px;
   align-items: center;
   justify-content: center;
-  background: #191b1f;
+  background: ${props => props.theme.background};
   font-size: 15px;
   font-weight: normal;
   font-style: normal;
   text-align: left;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   cursor: pointer;
   overflow: hidden;
   text-decoration: none;
@@ -88,18 +88,18 @@ export const LinkText = styled.p`
   font-weight: normal;
   font-style: normal;
   text-align: left;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   cursor: pointer;
   overflow: hidden;
   text-decoration: none;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 70%
+  max-width: 70%;
 `;
 export const LinkIcon = styled(Link45deg)`
   width: 15px;
   height: 15px;
-  color: #ffffff;
+  color: ${props => props.theme.main};
 `;
 
 export const RangeContainer = styled.div`
@@ -121,7 +121,7 @@ export const Paragraph = styled.p`
   font-weight: normal;
   font-style: normal;
   text-align: left;
-  color: #ffffff;
+  color: ${props => props.theme.main};
 `;
 
 export const RadioBox = styled.div`
@@ -172,7 +172,7 @@ export const InputContainer = styled.div`
   width: 331px;
   height: 45px;
   border-radius: 8px;
-  background: #2c2d33;
+  background: ${props => props.theme.background};
   gap: 5px;
 `;
 
@@ -185,7 +185,7 @@ export const ConvertLabel = styled.div`
   font-weight: normal;
   font-style: normal;
   text-align: center;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -194,13 +194,13 @@ export const ConvertLabel = styled.div`
 export const StyledInput = styled.input`
   width: 230px;
   height: 35px;
-  background: #2c2d33;
+  background: ${props => props.theme.background};
   border: none;
   font-size: 14px;
   font-weight: normal;
   font-style: normal;
   text-align: center;
-  color: #ffffff;
+  color: ${props => props.theme.main};
 `;
 
 export const CoinDescription = styled.p`
@@ -208,5 +208,5 @@ export const CoinDescription = styled.p`
   font-weight: normal;
   font-style: normal;
   text-align: center;
-  color: #ffffff;
+  color: ${props => props.theme.main};
 `;

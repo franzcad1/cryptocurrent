@@ -25,6 +25,7 @@ import {
   ArrowContainer,
   CenteredDiv,
 } from "./CoinSummary.styles";
+
 export default function CoinSummary(props) {
   const { coinData } = props.coin;
 

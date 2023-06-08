@@ -11,12 +11,12 @@ export const SummaryContainer = styled.div`
 export const CoinLink = styled.div`
   height: 64px;
   width: 100%;
-  background: #191b1f;
+  background: ${props => props.theme.background};
   font-size: 15px;
   font-weight: normal;
   font-style: normal;
   text-align: center;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,13 +38,13 @@ export const LeftContainer = styled.div`
   height: 64px;
   width: 100%;
   height: 295px;
-  background: #191b1f;
+  background: ${props => props.theme.background};
   border-radius: 15px;
 `;
 export const MiddleContainer = styled.div`
   height: 379px;
   width: 35%;
-  background: #191b1f;
+  background: ${props => props.theme.background};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -55,12 +55,12 @@ export const MiddleContainer = styled.div`
 export const RightContainer = styled.div`
   height: 379px;
   width: 500px;
-  background: #191b1f;
+  background: ${props => props.theme.background};
   font-size: 18px;
   font-weight: normal;
   font-style: normal;
   text-align: center;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -76,7 +76,7 @@ export const Icon = styled.img`
 export const IconContainer = styled.div`
   width: 104px;
   height: 103px;
-  background: #1f2128;
+  background: ${props => props.theme.secondary};
   border-radius: 8px;
   margin: 40px auto;
   display: flex;
@@ -89,20 +89,20 @@ export const CoinName = styled.p`
   font-weight: normal;
   font-style: normal;
   text-align: center;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   line-height: 2;
 `;
 
 export const LinkIcon = styled(Link45deg)`
   width: 15px;
   height: 15px;
-  color: #ffffff;
+  color: ${props => props.theme.main};
 `;
 
 export const StackIcon = styled(Stack)`
   width: 22px;
   height: 22px;
-  color: #ffffff;
+  color: ${props => props.theme.main};
 `;
 
 export const PlusIcon = styled(PlusSquareFill)`
@@ -142,7 +142,7 @@ export const AllTimeContainer = styled.div`
   font-weight: normal;
   font-style: normal;
   text-align: left;
-  color: #ffffff;
+  color: ${props => props.theme.main};
 `;
 
 export const Price = styled.h1`
@@ -150,7 +150,7 @@ export const Price = styled.h1`
   font-weight: normal;
   font-style: normal;
   text-align: center;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   line-height: 0;
 `;
 
@@ -159,7 +159,7 @@ export const DateTime = styled.p`
   font-weight: normal;
   font-style: normal;
   text-align: center;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   line-height: 0;
 `;
 
