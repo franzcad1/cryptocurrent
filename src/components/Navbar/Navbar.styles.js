@@ -4,6 +4,7 @@ import { DarkTheme } from "@styled-icons/fluentui-system-regular";
 import { DownArrow } from "@styled-icons/boxicons-regular";
 import { CurrencyDollar } from "styled-icons/bootstrap";
 import { SearchAlt } from "styled-icons/boxicons-regular";
+import { RunningWithErrors } from "styled-icons/material";
 
 export const MainContainer = styled.div`
   margin: auto;
@@ -145,7 +146,6 @@ export const ResultModal = styled.div`
   right: 275px;
   z-index: 1;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 10px;
@@ -157,4 +157,19 @@ export const ResultContainer = styled.div`
   justify-content: center;
   color: #ffffff;
   cursor: pointer;
+`;
+
+
+export const Error = styled.h1`
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  font-style: normal;
+  color: #ffffff;
+`;
+
+export const ErrorIcon = styled(RunningWithErrors)`
+  width: 22px;
+  height: 22px;
+  color: #ffffff;
 `;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import MarketDataBar from "../MarketDataBar/MarketDataBar";
+import { searchCoinData } from "../../store/search/searchActions";
 import {
   MainContainer,
   PagesContainer,
@@ -19,13 +20,15 @@ import {
   ThemeIcon,
   ResultContainer,
   ResultModal,
+  Error,
+  ErrorIcon,
 } from "./Navbar.styles";
-import { searchCoinData } from "../../store/search/searchActions";
 
 export default function Navbar(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const data = useSelector((state) => state.search.data);
+  const coins = useSelector((state) => state.search.coins);
+  const hasError = useSelector((state) => state.search.hasError);
   const [searchVal, setSearchVal] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -40,7 +43,6 @@ export default function Navbar(props) {
     }
     setSearchVal(e.target.value);
   };
-
   return (
     <>
       <MainContainer>
@@ -80,10 +82,11 @@ export default function Navbar(props) {
       </MainContainer>
       {isModalOpen && (
         <ResultModal>
-          <ResultContainer></ResultContainer>
-          {data &&
-            data.data.map((coin) => (
-              <ResultContainer onClick={() => navigate(`/coin/${coin.id}`)}>{coin.name}</ResultContainer>
+          {coins &&
+            coins.map((coin) => (
+              <ResultContainer onClick={() => navigate(`/coin/${coin.id}`)}>
+                {coin.name}
+              </ResultContainer>
             ))}
         </ResultModal>
       )}

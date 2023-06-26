@@ -6,6 +6,7 @@ import {
 
 const initialState = {
   data: null,
+  coins: null,
   isLoading: false,
   hasError: false,
 };
@@ -20,7 +21,7 @@ function searchReducer(state = initialState, action) {
     case SEARCH_COINS_SUCCESS:
       return {
         ...state,
-        data: action.payload,
+        ...action.payload,
         isLoading: false,
       };
     case SEARCH_COINS_ERROR:

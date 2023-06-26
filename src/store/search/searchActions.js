@@ -11,13 +11,14 @@ export const searchCoinData = (searchVal) => async (dispatch, getState) => {
       type: SEARCH_COINS_PENDING,
     });
     const { data } = await axios(
-      `https://cj4b5q.deta.dev/coins/?name_filter=${searchVal}`
+      "https://api.coingecko.com/api/v3/search?locale=en"
     );
-    console.log(data);
+    const coins = data.coins.filter(el => el.id.startsWith(searchVal) || el.name.startsWith(searchVal) || el.symbol.startsWith(searchVal));
     dispatch({
       type: SEARCH_COINS_SUCCESS,
       payload: {
         data: data,
+        coins: coins
       },
     });
   } catch (err) {

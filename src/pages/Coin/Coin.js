@@ -52,7 +52,7 @@ export default function Coin() {
       setCurrencyVal(coin.coinData.market_data.current_price.cad);
     }
     // eslint-disable-next-line
-  }, []);
+  }, [coinID]);
 
   useEffect(() => {
     if (coin.coinData) {
