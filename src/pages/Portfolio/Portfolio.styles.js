@@ -4,6 +4,7 @@ import { Pencil } from "styled-icons/boxicons-solid";
 export const PortfolioContainer = styled.div`
   margin: 25px auto;
   max-width: 1200px;
+  filter: ${props => props.isModalOpen ? 'blur(4px)' : 'blur(0px)'};
 `;
 
 export const Heading = styled.p`
@@ -150,12 +151,12 @@ export const FullBar = styled.div`
   height: 13px;
   border-radius: 8px;
   overflow: hidden;
-  background-color: #00FC2A;
+  background-color: #00fc2a;
 `;
 
 export const PartialBar = styled.div`
   height: 100%;
   width: ${(props) => props.width}%;
   border-radius: 8px;
-  background-color: ${props => props.theme.main};
+  background-color: ${(props) => props.theme.main};
 `;
