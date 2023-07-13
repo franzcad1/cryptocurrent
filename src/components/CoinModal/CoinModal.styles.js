@@ -79,7 +79,7 @@ export const IconContainer = styled.div`
 `;
 
 export const CoinName = styled.p`
-  font-size: 19px;
+  font-size: 14px;
   font-weight: normal;
   font-style: normal;
   text-align: center;
@@ -124,4 +124,33 @@ export const SaveButton = styled.button`
   border: none;
   cursor: pointer;
   font-weight: bold;
+`;
+
+export const ResultContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${(props) => props.theme.main};
+  cursor: pointer;
+`;
+
+export const ResultModal = styled.div`
+  border-radius: 0 0 15px 15px;
+  background: ${(props) => props.theme.background};
+  width: 500px;
+  height: 150px;
+  overflow: auto;
+  position: absolute;
+  top: 155px;
+  right: 175px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+export const CoinIcon = styled.img`
+  width: 35px;
+  height: 35px;
 `;

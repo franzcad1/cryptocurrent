@@ -138,7 +138,7 @@ export const StyledLink = styled(NavLink)`
 
 export const ResultModal = styled.div`
   border-radius: 0 0 15px 15px;
-  background: #191b1f;
+  background: ${props => props.theme.background};
   width: 250px;
   max-height: 125px;
   overflow: auto;
@@ -155,7 +155,7 @@ export const ResultContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
+  color: ${props => props.theme.main};
   cursor: pointer;
 `;
 

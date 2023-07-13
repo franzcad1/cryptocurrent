@@ -43,6 +43,13 @@ export default function Navbar(props) {
     }
     setSearchVal(e.target.value);
   };
+
+  const handleSubmit = (coin) => {
+    navigate(`/coin/${coin.id}`);
+    setSearchVal('');
+    setIsModalOpen(false);
+  }
+
   return (
     <>
       <MainContainer>
@@ -84,7 +91,7 @@ export default function Navbar(props) {
         <ResultModal>
           {coins &&
             coins.map((coin) => (
-              <ResultContainer onClick={() => navigate(`/coin/${coin.id}`)}>
+              <ResultContainer onClick={() => handleSubmit(coin)}>
                 {coin.name}
               </ResultContainer>
             ))}
