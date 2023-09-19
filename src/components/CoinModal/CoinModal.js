@@ -26,6 +26,9 @@ export default function CoinModal(props) {
   const navigate = useNavigate();
   const [showResults, setShowResults] = useState(false);
   const [searchVal, setSearchVal] = useState("");
+  const [coinID, setCoinID] = useState("");
+  const [purchasedAmt, setPurchasedAmt] = useState("");
+  const [datePurchased, setDatePurchased] = useState(null);
   const [selectedCoin, setSelectedCoin] = useState(false);
   const coin = useSelector((state) => state.coin);
   const coins = useSelector((state) => state.search.coins);
@@ -44,6 +47,7 @@ export default function CoinModal(props) {
 
   const handleCoinSelect = (coin) => {
     dispatch(getCoin(coin.id));
+    setCoinID(coin.id)
     setSelectedCoin(true);
     setSearchVal('');
     setShowResults(false);
@@ -74,16 +78,16 @@ export default function CoinModal(props) {
             />
           </InputDiv>
           <InputDiv>
-            <Input placeholder="Purchased Amount" type="number" />
+            <Input placeholder="Purchased Amount" type="number" value={purchasedAmt} onChange={(e) => setPurchasedAmt(e.target.value) }/>
           </InputDiv>
           <InputDiv>
-            <Input placeholder="Purchased Date" type="date" />
+            <Input placeholder="Purchased Date" type="date" value={datePurchased} onChange={(e) => setDatePurchased(e.target.value)} />
           </InputDiv>
         </InputContainer>
       </MainContainer>
       <ButtonContainer>
         <CloseButton onClick={props.handleClose}>Cancel</CloseButton>
-        <SaveButton>Save</SaveButton>
+        <SaveButton onClick={() => props.handleSave(coinID, purchasedAmt, datePurchased)}>Save</SaveButton>
       </ButtonContainer>
       {showResults && (
         <ResultModal>

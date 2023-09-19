@@ -23,15 +23,42 @@ import {
 export default class Portfolio extends Component {
   state = {
     isModalOpen: false,
+    purchasedCoinList: [],
   };
 
   handleClose = () => {
     this.setState({ isModalOpen: false });
   };
+
+  handleSave = (coinID, purchasedAmt, datePurchased) => {
+    let purchasedCoin = {};
+    purchasedCoin.coinID = "";
+    purchasedCoin.purchasedAmt = 0;
+    purchasedCoin.datePurchased = null;
+
+    if (coinID !== "" && (purchasedAmt !== "" || purchasedAmt > 0) && datePurchased !== null) {
+      purchasedCoin.coinID = coinID;
+      purchasedCoin.purchasedAmt = purchasedAmt;
+      purchasedCoin.datePurchased = datePurchased;
+      this.setState({
+        purchasedCoinList: [...this.state.purchasedCoinList, purchasedCoin],
+      });
+      this.setState({isModalOpen: false})
+      console.log(this.state.purchasedCoinList);
+    }
+    else {
+      console.log("Did not save");
+    }
+  };
   render() {
     return (
       <>
-        {this.state.isModalOpen && <CoinModal handleClose={this.handleClose} />}
+        {this.state.isModalOpen && (
+          <CoinModal
+            handleClose={this.handleClose}
+            handleSave={this.handleSave}
+          />
+        )}
         <PortfolioContainer isModalOpen={this.state.isModalOpen}>
           <Heading>Portfolio Page is currently being developed</Heading>
           <AddButton onClick={() => this.setState({ isModalOpen: true })}>
