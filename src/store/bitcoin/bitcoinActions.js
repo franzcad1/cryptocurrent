@@ -15,7 +15,7 @@ export const getBitcoinData = () => async (dispatch, getState) => {
     );
 
     const { data: dataHourly } = await axios(
-      `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=cad&days=1&interval=hourly`
+      `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=cad&days=2`
     );
     dispatch({
         type: GET_BITCOIN_DATA_SUCCESS,

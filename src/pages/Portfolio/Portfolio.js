@@ -52,6 +52,7 @@ export default class Portfolio extends Component {
           </AddButton>
           <Heading>Your Statistics</Heading>
           <PurchasedCoin></PurchasedCoin>
+          <PurchasedCoin></PurchasedCoin>
         </PortfolioContainer>
       </>
     );

@@ -9,6 +9,7 @@ export const CoinPortfolioContainer = styled.div`
   gap: 20px;
   align-items: center;
   font-size: 20px;
+  margin-bottom: 30px;
 `;
 
 export const CoinContainer = styled.div`
