@@ -33,7 +33,7 @@ export const IconContainer = styled.div`
 `;
 
 export const CoinName = styled.p`
-  font-size: 25px;
+  font-size: 22px;
   font-weight: normal;
   font-style: normal;
   text-align: center;
@@ -50,7 +50,7 @@ export const PriceAndCoinContainer = styled.div`
   justify-content: space-between;
 `;
 export const Label = styled.p`
-  font-size: 15px;
+  font-size: 12px;
   font-weight: normal;
   font-style: normal;
   text-align: left;
@@ -59,7 +59,7 @@ export const Label = styled.p`
 `;
 
 export const Number = styled.p`
-  font-size: 15px;
+  font-size: 13px;
   font-weight: bold;
   font-style: normal;
   text-align: left;

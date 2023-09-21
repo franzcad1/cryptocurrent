@@ -152,7 +152,7 @@ export default function CoinSummary(props) {
               <IconWithTextContainer>
                 <PlusIcon /> Max Supply:{" "}
                 {coinData.market_data.max_supply
-                  ? coinData.market_data.max_supply.toLocaleString()
+                  ? coinData.market_data.total_supply.toLocaleString()
                   : 0}{" "}
                 {coinData.symbol.toUpperCase()}
               </IconWithTextContainer>

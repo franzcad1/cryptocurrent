@@ -30,7 +30,6 @@ export default class Portfolio extends Component {
         purchasedCoinList: [...this.state.purchasedCoinList, purchasedCoin],
       });
       this.setState({isModalOpen: false})
-      console.log(this.state.purchasedCoinList);
     }
     else {
       console.log("Did not save");
@@ -51,8 +50,7 @@ export default class Portfolio extends Component {
             Add Asset
           </AddButton>
           <Heading>Your Statistics</Heading>
-          <PurchasedCoin></PurchasedCoin>
-          <PurchasedCoin></PurchasedCoin>
+          {this.state.purchasedCoinList.length > 0 ? <> {this.state.purchasedCoinList.map((purchasedCoin) => (<PurchasedCoin purchasedCoin={purchasedCoin}/>) )} </> : <p>No Coins on Portfolio</p>  }
         </PortfolioContainer>
       </>
     );
