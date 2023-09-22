@@ -5,6 +5,7 @@ import {
   PortfolioContainer,
   Heading,
   AddButton,
+  CenteredText,
 } from "./Portfolio.styles";
 export default class Portfolio extends Component {
   state = {
@@ -35,6 +36,14 @@ export default class Portfolio extends Component {
       console.log("Did not save");
     }
   };
+
+  handleDelete = (coinID) => {
+    const purchasedList = this.state.purchasedCoinList.filter(coin => {return coin.coinID !== coinID});
+    this.setState({purchasedCoinList: purchasedList})
+    console.log('deleted');
+    console.log(purchasedList);
+  }
+
   render() {
     return (
       <>
@@ -45,12 +54,12 @@ export default class Portfolio extends Component {
           />
         )}
         <PortfolioContainer isModalOpen={this.state.isModalOpen}>
-          <Heading>Portfolio Page is currently being developed</Heading>
+          <CenteredText>Portfolio Page is currently being developed</CenteredText>
           <AddButton onClick={() => this.setState({ isModalOpen: true })}>
             Add Asset
           </AddButton>
           <Heading>Your Statistics</Heading>
-          {this.state.purchasedCoinList.length > 0 ? <> {this.state.purchasedCoinList.map((purchasedCoin) => (<PurchasedCoin purchasedCoin={purchasedCoin}/>) )} </> : <p>No Coins on Portfolio</p>  }
+          {this.state.purchasedCoinList.length > 0 ? <> {this.state.purchasedCoinList.map((purchasedCoin) => (<PurchasedCoin purchasedCoin={purchasedCoin} handleDelete={this.handleDelete}/>) )} </> : <CenteredText>Add an Asset to view Statistics</CenteredText>  }
         </PortfolioContainer>
       </>
     );

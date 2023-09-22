@@ -9,7 +9,7 @@ import {
   CoinName,
   Label,
   LabelEditContainer,
-  EditContainer,
+  BoxContainer,
   NumbersContainer,
   LabelWithNumberContainer,
   Number,
@@ -17,6 +17,7 @@ import {
   EditIcon,
   FullBar,
   PartialBar,
+  DeleteIcon,
 } from "./PurchasedCoin.styles";
 export default function PurchasedCoin(props) {
   const dispatch = useDispatch();
@@ -49,45 +50,66 @@ export default function PurchasedCoin(props) {
               <LabelWithNumberContainer>
                 <Label>Current Price:</Label>
                 <Number>
-                  ${selectedCoin.coinData.market_data.current_price.cad.toLocaleString()}
+                  $
+                  {selectedCoin.coinData.market_data.current_price.cad.toLocaleString()}
                 </Number>
               </LabelWithNumberContainer>
               <LabelWithNumberContainer>
                 <Label>Price Change 24h:</Label>
-                <Number>$39,504</Number>
+                <Number>{selectedCoin.coinData.market_data.price_change_percentage_24h_in_currency.cad.toFixed(
+                        2
+                      )}</Number>
               </LabelWithNumberContainer>
               <LabelWithNumberContainer>
                 <Label>Market Cap vs Volume:</Label>
-                <Number>     {((
-                  selectedCoin.coinData.market_data.total_volume.cad /
-                  selectedCoin.coinData.market_data.market_cap.cad
-                )* 100).toFixed(2)}%</Number>
+                <Number>
+                  {" "}
+                  {(
+                    (selectedCoin.coinData.market_data.total_volume.cad /
+                      selectedCoin.coinData.market_data.market_cap.cad) *
+                    100
+                  ).toFixed(2)}
+                  %
+                </Number>
                 <FullBar>
-                  <PartialBar width={((
-                  selectedCoin.coinData.market_data.total_volume.cad /
-                  selectedCoin.coinData.market_data.market_cap.cad
-                )* 100)} />
+                  <PartialBar
+                    width={
+                      (selectedCoin.coinData.market_data.total_volume.cad /
+                        selectedCoin.coinData.market_data.market_cap.cad) *
+                      100
+                    }
+                  />
                 </FullBar>
               </LabelWithNumberContainer>
               <LabelWithNumberContainer>
                 <Label>Circ Supply vs Max Supply:</Label>
-                <Number>{((
-                  selectedCoin.coinData.market_data.circulating_supply /
-                  selectedCoin.coinData.market_data.total_supply
-                )* 100).toFixed(2)}%</Number>
+                <Number>
+                  {(
+                    (selectedCoin.coinData.market_data.circulating_supply /
+                      selectedCoin.coinData.market_data.total_supply) *
+                    100
+                  ).toFixed(2)}
+                  %
+                </Number>
                 <FullBar>
-                  <PartialBar width={((
-                  selectedCoin.coinData.market_data.circulating_supply /
-                  selectedCoin.coinData.market_data.total_supply
-                )* 100)} />
+                  <PartialBar
+                    width={
+                      (selectedCoin.coinData.market_data.circulating_supply /
+                        selectedCoin.coinData.market_data.total_supply) *
+                      100
+                    }
+                  />
                 </FullBar>
               </LabelWithNumberContainer>
             </NumbersContainer>
             <LabelEditContainer>
               <Label>Your Coin:</Label>
-              <EditContainer>
+              <BoxContainer>
                 <EditIcon />
-              </EditContainer>
+              </BoxContainer>
+              <BoxContainer onClick={() => props.handleDelete(selectedCoin.coinData.id)}>
+                <DeleteIcon />
+              </BoxContainer>
             </LabelEditContainer>
             <NumbersContainer>
               <LabelWithNumberContainer>
@@ -96,7 +118,14 @@ export default function PurchasedCoin(props) {
               </LabelWithNumberContainer>
               <LabelWithNumberContainer>
                 <Label>Amount Value:</Label>
-                <Number> ${(selectedCoin.coinData.market_data.current_price.cad * props.purchasedCoin.purchasedAmt ).toLocaleString()}</Number>
+                <Number>
+                  {" "}
+                  $
+                  {(
+                    selectedCoin.coinData.market_data.current_price.cad *
+                    props.purchasedCoin.purchasedAmt
+                  ).toLocaleString()}
+                </Number>
               </LabelWithNumberContainer>
               <LabelWithNumberContainer>
                 <Label>Purchase Date:</Label>

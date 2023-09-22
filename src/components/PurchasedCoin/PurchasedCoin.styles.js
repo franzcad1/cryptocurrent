@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Pencil } from "styled-icons/boxicons-solid";
-
+import {Delete} from 'styled-icons/fluentui-system-filled'
 export const CoinPortfolioContainer = styled.div`
   height: 295px;
   width: 100%
@@ -50,7 +50,7 @@ export const PriceAndCoinContainer = styled.div`
   justify-content: space-between;
 `;
 export const Label = styled.p`
-  font-size: 12px;
+  font-size: 13px;
   font-weight: normal;
   font-style: normal;
   text-align: left;
@@ -73,7 +73,7 @@ export const LabelEditContainer = styled.div`
   align-items: center;
 `;
 
-export const EditContainer = styled.div`
+export const BoxContainer = styled.div`
   width: 37px;
   height: 37px;
   background: ${(props) => props.theme.secondary};
@@ -109,6 +109,12 @@ export const EditIcon = styled(Pencil)`
   width: 14.1px;
   height: 14.6px;
   color: #ffb528;
+`;
+
+export const DeleteIcon = styled(Delete)`
+  width: 14.1px;
+  height: 14.6px;
+  color: red;
 `;
 
 export const NumberColored = styled.td`
