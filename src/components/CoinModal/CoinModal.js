@@ -23,6 +23,7 @@ import { searchCoinData } from "../../store/search/searchActions";
 import { getCoin } from "../../store/coin/coinActions";
 export default function CoinModal(props) {
   const dispatch = useDispatch();
+  // eslint-disable-next-line no-unused-vars
   const navigate = useNavigate();
   const [showResults, setShowResults] = useState(false);
   const [searchVal, setSearchVal] = useState("");

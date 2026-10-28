@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import MarketDataBar from "../MarketDataBar/MarketDataBar";
@@ -20,8 +20,6 @@ import {
   ThemeIcon,
   ResultContainer,
   ResultModal,
-  Error,
-  ErrorIcon,
 } from "./Navbar.styles";
 
 export default function Navbar(props) {
