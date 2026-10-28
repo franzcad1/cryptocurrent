@@ -1,156 +1,181 @@
 import styled from "styled-components";
 import { CloseOutline } from "styled-icons/evaicons-outline";
+
 export const CoinModalContainer = styled.div`
-  width: 1087px;
-  height: 504px;
-  border-radius: 12px;
+  width: 560px;
+  border-radius: 16px;
   background: ${(props) => props.theme.secondary};
   position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 99999;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
 export const ModalHeading = styled.h1`
-  height: 40px;
-  font-size: 28px;
-  font-weight: normal;
-  font-style: normal;
+  font-size: 22px;
+  font-weight: 600;
   text-align: center;
   color: ${(props) => props.theme.main};
+  margin: 0;
 `;
 
 export const CloseIcon = styled(CloseOutline)`
-  width: 50px;
-  height: 50px;
-  color: #06d554;
+  width: 32px;
+  height: 32px;
+  color: ${(props) => props.theme.main};
+  opacity: 0.5;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 16px;
+  right: 16px;
   cursor: pointer;
+  &:hover { opacity: 1; }
 `;
 
-export const MainContainer = styled.div`
+export const CoinSelectRow = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 40px;
-  margin-top: 40px;
-`;
-export const InputContainer = styled.div`
-  width: 508px;
-  height: 233px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-`;
-export const CoinContainer = styled.div`
-  width: 204px;
-  height: 233px;
-  border-radius: 12px;
+  gap: 12px;
   background: ${(props) => props.theme.background};
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-export const InputDiv = styled.div`
-  width: 508px;
-  height: 66px;
   border-radius: 12px;
-  background: ${(props) => props.theme.background};
-  font-size: 19px;
-  color: ${(props) => props.theme.main};
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 10px 16px;
+  position: relative;
 `;
 
-export const IconContainer = styled.div`
-  border-radius: 8px;
-  width: 83px;
-  height: 82px;
+export const CoinIcon = styled.img`
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+`;
+
+export const CoinIconPlaceholder = styled.div`
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
   background: ${(props) => props.theme.secondary};
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-shrink: 0;
 `;
 
-export const CoinName = styled.p`
-  font-size: 14px;
-  font-weight: normal;
-  font-style: normal;
-  text-align: center;
+export const CoinName = styled.span`
+  font-size: 15px;
+  font-weight: 500;
   color: ${(props) => props.theme.main};
-  line-height: 2;
+  white-space: nowrap;
+  min-width: 80px;
 `;
 
 export const Input = styled.input`
-  background: ${(props) => props.theme.background};
-  width: 480px;
-  height: 60px;
+  background: transparent;
   border: none;
-  font-size: 19px;
+  font-size: 15px;
   color: ${(props) => props.theme.main};
+  flex: 1;
+  outline: none;
+  &::placeholder { color: ${(props) => props.theme.main}; opacity: 0.35; }
+`;
+
+export const InputRow = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+export const InputBox = styled.div`
+  flex: 1;
+  background: ${(props) => props.theme.background};
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+export const InputLabel = styled.span`
+  font-size: 11px;
+  color: ${(props) => props.theme.main};
+  opacity: 0.45;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+`;
+
+export const InlineInput = styled.input`
+  background: transparent;
+  border: none;
+  font-size: 15px;
+  color: ${(props) => props.theme.main};
+  width: 100%;
+  outline: none;
+  &::placeholder { color: ${(props) => props.theme.main}; opacity: 0.35; }
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 50px;
+  gap: 12px;
+  margin-top: 4px;
 `;
 
 export const CloseButton = styled.button`
-  width: 294px;
-  height: 60px;
-  color: #06d554;
+  flex: 1;
+  height: 48px;
+  color: ${(props) => props.theme.main};
   border-radius: 12px;
-  background: ${(props) => props.theme.main};
+  background: ${(props) => props.theme.background};
   border: none;
   cursor: pointer;
-  font-weight: bold;
+  font-size: 15px;
+  font-weight: 600;
+  &:hover { opacity: 0.8; }
 `;
 
 export const SaveButton = styled.button`
-  width: 294px;
-  height: 60px;
-  color: ${(props) => props.theme.main};
+  flex: 1;
+  height: 48px;
+  color: #fff;
   border-radius: 12px;
   background: #06d554;
   border: none;
   cursor: pointer;
-  font-weight: bold;
-`;
-
-export const ResultContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${(props) => props.theme.main};
-  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: opacity 0.2s;
+  &:hover:not(:disabled) { opacity: 0.85; }
+  &:disabled { opacity: 0.45; cursor: not-allowed; }
 `;
 
 export const ResultModal = styled.div`
-  border-radius: 0 0 15px 15px;
+  border-radius: 12px;
   background: ${(props) => props.theme.background};
-  width: 500px;
-  height: 150px;
-  overflow: auto;
+  width: 100%;
+  max-height: 180px;
+  overflow-y: auto;
   position: absolute;
-  top: 155px;
-  right: 175px;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 10px;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 10;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
 `;
 
-export const CoinIcon = styled.img`
-  width: 35px;
-  height: 35px;
+export const ResultContainer = styled.div`
+  padding: 10px 16px;
+  font-size: 14px;
+  color: ${(props) => props.theme.main};
+  cursor: pointer;
+  &:hover { background: rgba(255,255,255,0.06); }
 `;
+
+export const StatusText = styled.p`
+  font-size: 12px;
+  color: ${(props) => props.theme.main};
+  opacity: 0.4;
+  text-align: center;
+  margin: 0;
+`;
+
+export const MainContainer = styled.div``;
+export const InputContainer = styled.div``;
+export const InputDiv = styled.div``;
+export const IconContainer = styled.div``;

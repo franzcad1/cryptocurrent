@@ -2,14 +2,13 @@ import styled from 'styled-components'
 import { Pencil } from "styled-icons/boxicons-solid";
 import {Delete} from 'styled-icons/fluentui-system-filled'
 export const CoinPortfolioContainer = styled.div`
-  height: 295px;
-  width: 100%
-  background: #191b1f;
+  width: 100%;
+  background: transparent;
   display: flex;
   gap: 20px;
-  align-items: center;
+  align-items: stretch;
   font-size: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 `;
 
 export const CoinContainer = styled.div`
@@ -67,6 +66,23 @@ export const Number = styled.p`
   line-height: 0;
 `;
 
+export const NumberValue = styled.p`
+  font-size: 13px;
+  font-weight: 600;
+  color: ${props => props.theme.main};
+  margin: 0;
+  line-height: 1.4;
+`;
+
+export const GainValue = styled.p`
+  font-size: 13px;
+  font-weight: 600;
+  color: ${props => props.positive ? "#06d554" : "#fe1040"};
+  margin: 0;
+  line-height: 1.4;
+  text-align: right;
+`;
+
 export const LabelEditContainer = styled.div`
   display: flex;
   gap: 15px;
@@ -96,8 +112,9 @@ export const NumbersContainer = styled.div`
 
 export const LabelWithNumberContainer = styled.div`
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
 `;
 
 export const Icon = styled.img`

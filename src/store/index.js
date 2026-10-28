@@ -5,6 +5,7 @@ import coinListReducer from "./coinList/coinListReducer";
 import coinReducer from "./coin/coinReducer";
 import searchReducer from "./search/searchReducer";
 import globalReducer from "./global/globalReducer";
+import portfolioReducer from "./portfolio/portfolioReducer";
 
 const CACHE_KEY = "cryptocurrent_cache";
 
@@ -12,9 +13,9 @@ const loadCache = () => {
   try {
     const raw = localStorage.getItem(CACHE_KEY);
     if (!raw) return undefined;
-    const { bitcoin, search, coin, global: globalData } = JSON.parse(raw);
+    const { bitcoin, search, coin, global: globalData, portfolio } = JSON.parse(raw);
     const validSearch = { coins: null, queryCache: search?.queryCache || {}, isLoading: false, hasError: false };
-    return { bitcoin, search: validSearch, coin, global: globalData };
+    return { bitcoin, search: validSearch, coin, global: globalData, portfolio };
   } catch {
     localStorage.removeItem(CACHE_KEY);
     return undefined;
@@ -23,8 +24,8 @@ const loadCache = () => {
 
 const saveCache = (state) => {
   try {
-    const { bitcoin, search, coin, global: globalData } = state;
-    localStorage.setItem(CACHE_KEY, JSON.stringify({ bitcoin, search, coin, global: globalData }));
+    const { bitcoin, search, coin, global: globalData, portfolio } = state;
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ bitcoin, search, coin, global: globalData, portfolio }));
   } catch {}
 };
 
@@ -39,6 +40,7 @@ const reducers = combineReducers({
     coin: coinReducer,
     search: searchReducer,
     global: globalReducer,
+    portfolio: portfolioReducer,
     errorCount: errorCountReducer,
 });
 

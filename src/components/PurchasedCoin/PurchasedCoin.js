@@ -1,140 +1,79 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getCoin } from "../../store/coin/coinActions";
+import React from "react";
 import {
   CoinPortfolioContainer,
   CoinContainer,
-  PriceAndCoinContainer,
   IconContainer,
   CoinName,
-  Label,
-  LabelEditContainer,
-  BoxContainer,
+  Icon,
+  PriceAndCoinContainer,
   NumbersContainer,
   LabelWithNumberContainer,
-  Number,
-  Icon,
-  EditIcon,
-  FullBar,
-  PartialBar,
+  Label,
+  NumberValue,
+  GainValue,
+  LabelEditContainer,
+  BoxContainer,
   DeleteIcon,
 } from "./PurchasedCoin.styles";
-export default function PurchasedCoin(props) {
-  const dispatch = useDispatch();
-  const coin = useSelector((state) => state.coin);
-  const [selectedCoin, setSelectedCoin] = useState(null);
 
-  useEffect(() => {
-    dispatch(getCoin(props.purchasedCoin.coinID));
-    setSelectedCoin(coin);
-    // eslint-disable-next-line
-  }, [props.purchasedCoin.coinID]);
+export default function PurchasedCoin({ holding, handleDelete }) {
+  const { coinID, name, symbol, image, purchasedAmt, purchasedPrice, datePurchased, cachedPrice } = holding;
+
+  const currentValue = cachedPrice * purchasedAmt;
+  const costBasis = purchasedPrice * purchasedAmt;
+  const gain = currentValue - costBasis;
+  const gainPct = costBasis > 0 ? (gain / costBasis) * 100 : 0;
+  const isPositive = gain >= 0;
+
+  const fmt = (n) => n.toLocaleString("en-CA", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
   return (
-    <>
-      {selectedCoin && (
-        <CoinPortfolioContainer>
-          <CoinContainer>
-            <IconContainer>
-              <Icon src={selectedCoin.coinData.image.large} />
-            </IconContainer>
-            <CoinName>
-              {selectedCoin.coinData.name} (
-              {selectedCoin.coinData.symbol.toUpperCase()})
-            </CoinName>
-          </CoinContainer>
-          <PriceAndCoinContainer>
-            <LabelEditContainer>
-              <Label>Market Price:</Label>
-            </LabelEditContainer>
-            <NumbersContainer>
-              <LabelWithNumberContainer>
-                <Label>Current Price:</Label>
-                <Number>
-                  $
-                  {selectedCoin.coinData.market_data.current_price.cad.toLocaleString()}
-                </Number>
-              </LabelWithNumberContainer>
-              <LabelWithNumberContainer>
-                <Label>Price Change 24h:</Label>
-                <Number>{selectedCoin.coinData.market_data.price_change_percentage_24h_in_currency.cad.toFixed(
-                        2
-                      )}</Number>
-              </LabelWithNumberContainer>
-              <LabelWithNumberContainer>
-                <Label>Market Cap vs Volume:</Label>
-                <Number>
-                  {" "}
-                  {(
-                    (selectedCoin.coinData.market_data.total_volume.cad /
-                      selectedCoin.coinData.market_data.market_cap.cad) *
-                    100
-                  ).toFixed(2)}
-                  %
-                </Number>
-                <FullBar>
-                  <PartialBar
-                    width={
-                      (selectedCoin.coinData.market_data.total_volume.cad /
-                        selectedCoin.coinData.market_data.market_cap.cad) *
-                      100
-                    }
-                  />
-                </FullBar>
-              </LabelWithNumberContainer>
-              <LabelWithNumberContainer>
-                <Label>Circ Supply vs Max Supply:</Label>
-                <Number>
-                  {(
-                    (selectedCoin.coinData.market_data.circulating_supply /
-                      selectedCoin.coinData.market_data.total_supply) *
-                    100
-                  ).toFixed(2)}
-                  %
-                </Number>
-                <FullBar>
-                  <PartialBar
-                    width={
-                      (selectedCoin.coinData.market_data.circulating_supply /
-                        selectedCoin.coinData.market_data.total_supply) *
-                      100
-                    }
-                  />
-                </FullBar>
-              </LabelWithNumberContainer>
-            </NumbersContainer>
-            <LabelEditContainer>
-              <Label>Your Coin:</Label>
-              <BoxContainer>
-                <EditIcon />
-              </BoxContainer>
-              <BoxContainer onClick={() => props.handleDelete(selectedCoin.coinData.id)}>
-                <DeleteIcon />
-              </BoxContainer>
-            </LabelEditContainer>
-            <NumbersContainer>
-              <LabelWithNumberContainer>
-                <Label>Coin Amount:</Label>
-                <Number>{props.purchasedCoin.purchasedAmt}</Number>
-              </LabelWithNumberContainer>
-              <LabelWithNumberContainer>
-                <Label>Amount Value:</Label>
-                <Number>
-                  {" "}
-                  $
-                  {(
-                    selectedCoin.coinData.market_data.current_price.cad *
-                    props.purchasedCoin.purchasedAmt
-                  ).toLocaleString()}
-                </Number>
-              </LabelWithNumberContainer>
-              <LabelWithNumberContainer>
-                <Label>Purchase Date:</Label>
-                <Number>{props.purchasedCoin.datePurchased}</Number>
-              </LabelWithNumberContainer>
-            </NumbersContainer>
-          </PriceAndCoinContainer>
-        </CoinPortfolioContainer>
-      )}
-    </>
+    <CoinPortfolioContainer>
+      <CoinContainer>
+        <IconContainer>
+          <Icon src={image} alt={name} />
+        </IconContainer>
+        <CoinName>{name}<br /><span style={{ fontSize: "14px", opacity: 0.6 }}>{symbol.toUpperCase()}</span></CoinName>
+      </CoinContainer>
+
+      <PriceAndCoinContainer>
+        <LabelEditContainer>
+          <Label style={{ fontSize: "15px", fontWeight: 500, opacity: 1 }}>Your Holdings</Label>
+          <BoxContainer onClick={() => handleDelete(coinID)}>
+            <DeleteIcon />
+          </BoxContainer>
+        </LabelEditContainer>
+
+        <NumbersContainer>
+          <LabelWithNumberContainer>
+            <Label>Amount</Label>
+            <NumberValue>{purchasedAmt} {symbol.toUpperCase()}</NumberValue>
+          </LabelWithNumberContainer>
+          <LabelWithNumberContainer>
+            <Label>Avg. Buy Price</Label>
+            <NumberValue>${fmt(purchasedPrice)}</NumberValue>
+          </LabelWithNumberContainer>
+          <LabelWithNumberContainer>
+            <Label>Current Price</Label>
+            <NumberValue>${fmt(cachedPrice)}</NumberValue>
+          </LabelWithNumberContainer>
+          <LabelWithNumberContainer>
+            <Label>Current Value</Label>
+            <NumberValue>${fmt(currentValue)}</NumberValue>
+          </LabelWithNumberContainer>
+          <LabelWithNumberContainer>
+            <Label>P&amp;L</Label>
+            <GainValue positive={isPositive}>
+              {isPositive ? "+" : ""}${fmt(gain)}<br />
+              <span style={{ fontSize: "12px" }}>{isPositive ? "+" : ""}{gainPct.toFixed(2)}%</span>
+            </GainValue>
+          </LabelWithNumberContainer>
+          <LabelWithNumberContainer>
+            <Label>Since</Label>
+            <NumberValue>{datePurchased}</NumberValue>
+          </LabelWithNumberContainer>
+        </NumbersContainer>
+      </PriceAndCoinContainer>
+    </CoinPortfolioContainer>
   );
 }
