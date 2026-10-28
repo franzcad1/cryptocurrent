@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getGlobalData } from "../../store/global/globalActions";
 import { convertedNumber } from "../../utils/convertedNumber";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import {
@@ -11,19 +12,12 @@ import {
   UpIcon,
 } from "./MarketDataBar.styles";
 export default function MarketDataBar() {
-  const [globalData, setGlobalData] = useState(null);
+  const dispatch = useDispatch();
+  const globalData = useSelector((state) => state.global.data);
 
-  const getGlobalData = async () => {
-    try {
-      const { data } = await axios(`https://api.coingecko.com/api/v3/global`);
-      setGlobalData(data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
   useEffect(() => {
-    getGlobalData();
-  }, []);
+    dispatch(getGlobalData()); // fires immediately
+  }, []);//eslint-disable-line
 
   return (
     <MainContainer>

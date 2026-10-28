@@ -6,11 +6,16 @@ import {
   CHANGE_RANGE,
 } from "./coinTypes";
 
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
 export const getCoin = (id) => async (dispatch, getState) => {
   const state = getState();
+  const { lastFetched, lastFetchedId, lastFetchedRange } = state.coin;
+  const { coinData } = state.coin;
   const range = state.coin.range;
+  if (coinData && lastFetchedId === id && lastFetchedRange === range && lastFetched && Date.now() - lastFetched < CACHE_DURATION) return;
   try {
-    dispatch({ type: GET_COIN_PENDING });
+    dispatch({ type: GET_COIN_PENDING, payload: { switchingCoin: lastFetchedId !== id } });
     const { data } = await axios(
       `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&market_data=true&community_data=true&developer_data=false&sparkline=false`
     );
@@ -22,6 +27,7 @@ export const getCoin = (id) => async (dispatch, getState) => {
       payload: {
         coinData: data,
         chartData: chart.prices,
+        range,
       },
     });
   } catch (err) {

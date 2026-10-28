@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import MarketDataBar from "../MarketDataBar/MarketDataBar";
@@ -29,19 +29,24 @@ export default function Navbar(props) {
   const navigate = useNavigate();
   const coins = useSelector((state) => state.search.coins);
   const hasError = useSelector((state) => state.search.hasError);
+  const isSearchLoading = useSelector((state) => state.search.isLoading);
   const [searchVal, setSearchVal] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const debounceRef = useRef(null);
 
   const handleSearchChange = (e) => {
-    if (e.target.value !== "") {
-      dispatch(searchCoinData(e.target.value));
-      setTimeout(() => {
-        setIsModalOpen(true);
-      }, 1000);
+    const val = e.target.value;
+    setSearchVal(val);
+    if (val !== "") {
+      setIsModalOpen(true);
+      clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => {
+        dispatch(searchCoinData(val));
+      }, 500);
     } else {
       setIsModalOpen(false);
+      clearTimeout(debounceRef.current);
     }
-    setSearchVal(e.target.value);
   };
 
   const handleSubmit = (coin) => {
@@ -89,12 +94,19 @@ export default function Navbar(props) {
       </MainContainer>
       {isModalOpen && (
         <ResultModal>
-          {coins &&
+          {isSearchLoading ? (
+            <ResultContainer>Searching...</ResultContainer>
+          ) : hasError ? (
+            <ResultContainer>Rate limited — please wait a moment.</ResultContainer>
+          ) : coins && coins.length > 0 ? (
             coins.map((coin) => (
-              <ResultContainer onClick={() => handleSubmit(coin)}>
+              <ResultContainer key={coin.id} onClick={() => handleSubmit(coin)}>
                 {coin.name}
               </ResultContainer>
-            ))}
+            ))
+          ) : (
+            <ResultContainer>No results found.</ResultContainer>
+          )}
         </ResultModal>
       )}
       <MarketDataBar />

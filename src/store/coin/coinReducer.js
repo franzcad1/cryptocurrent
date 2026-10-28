@@ -10,6 +10,9 @@ const initialState = {
   isLoading: false,
   hasError: false,
   range: "1",
+  lastFetched: null,
+  lastFetchedId: null,
+  lastFetchedRange: null,
 };
 
 function coinReducer(state = initialState, action) {
@@ -17,6 +20,8 @@ function coinReducer(state = initialState, action) {
     case GET_COIN_PENDING:
       return {
         ...state,
+        coinData: action.payload?.switchingCoin ? null : state.coinData,
+        chartData: null,
         isLoading: true,
       };
     case GET_COIN_SUCCESS:
@@ -24,10 +29,15 @@ function coinReducer(state = initialState, action) {
         ...state,
         ...action.payload,
         isLoading: false,
+        lastFetched: Date.now(),
+        lastFetchedId: action.payload.coinData.id,
+        lastFetchedRange: action.payload.range,
       };
     case GET_COIN_ERROR:
       return {
         ...state,
+        coinData: null,
+        chartData: null,
         isLoading: false,
         hasError: true,
       };

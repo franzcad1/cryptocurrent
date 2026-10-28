@@ -8,6 +8,7 @@ const initialState = {
   dataHourly: null,
   isLoading: false,
   hasError: false,
+  lastFetched: null,
 };
 
 function bitcoinReducer(state = initialState, action) {
@@ -22,6 +23,7 @@ function bitcoinReducer(state = initialState, action) {
         ...state,
         ...action.payload,
         isLoading: false,
+        lastFetched: Date.now(),
       };
     case GET_BITCOIN_DATA_ERROR:
       return {

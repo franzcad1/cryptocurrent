@@ -120,3 +120,39 @@ export const ChartContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const LoadMoreContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+`;
+
+export const LoadMoreButton = styled.button`
+  background: #2172e5;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 40px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  &:hover:not(:disabled) {
+    opacity: 0.85;
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
+
+export const ApiWarning = styled.p`
+  font-size: 13px;
+  color: #f0a500;
+  background: rgba(240, 165, 0, 0.1);
+  border: 1px solid rgba(240, 165, 0, 0.3);
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin: 10px 0 0 0;
+  max-width: 1712px;
+`;

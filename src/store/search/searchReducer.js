@@ -5,8 +5,8 @@ import {
 } from "./searchTypes";
 
 const initialState = {
-  data: null,
   coins: null,
+  queryCache: {},
   isLoading: false,
   hasError: false,
 };
@@ -14,22 +14,23 @@ const initialState = {
 function searchReducer(state = initialState, action) {
   switch (action.type) {
     case SEARCH_COINS_PENDING:
-      return {
-        ...state,
-        isLoading: true,
-      };
+      return { ...state, isLoading: true, hasError: false };
     case SEARCH_COINS_SUCCESS:
       return {
         ...state,
-        ...action.payload,
+        coins: action.payload.coins,
+        queryCache: {
+          ...state.queryCache,
+          [action.payload.query]: {
+            coins: action.payload.coins,
+            lastFetched: Date.now(),
+          },
+        },
         isLoading: false,
+        hasError: false,
       };
     case SEARCH_COINS_ERROR:
-      return {
-        ...state,
-        isLoading: false,
-        hasError: true,
-      };
+      return { ...state, isLoading: false, hasError: true };
     default:
       return state;
   }

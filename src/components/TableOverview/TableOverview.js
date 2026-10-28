@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -7,7 +7,6 @@ import {
 } from "../../store/coinList/coinListActions";
 import { convertedNumber } from "../../utils/convertedNumber";
 import SparklineChart from "../SparklineChart/SparklineChart";
-import InfiniteScroll from "react-infinite-scroll-component";
 import {
   Heading,
   CoinTable,
@@ -24,13 +23,18 @@ import {
   BarText,
   CoinIcon,
   ChartContainer,
+  LoadMoreButton,
+  LoadMoreContainer,
+  ApiWarning,
 } from "./TableOverview.styles";
 export default function TableOverview(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [hasLoadedMore, setHasLoadedMore] = useState(false);
 
   useEffect(() => {
-    dispatch(getCoinList());
+    const t = setTimeout(() => dispatch(getCoinList()), 2000);
+    return () => clearTimeout(t);
     //eslint-disable-next-line
   }, []);
 
@@ -41,11 +45,7 @@ export default function TableOverview(props) {
     <>
       <Heading>Your Overview</Heading>
       {props.coinList.coins.length > 0 && (
-        <InfiniteScroll
-          dataLength={props.coinList.coins.length}
-          next={() => dispatch(getMoreCoinList())}
-          hasMore={props.coinList.hasMore}
-        >
+        <>
           <TableContainer>
             <CoinTable>
               <thead>
@@ -148,7 +148,22 @@ export default function TableOverview(props) {
               </tbody>
             </CoinTable>
           </TableContainer>
-        </InfiniteScroll>
+          {props.coinList.hasMore && (
+            <LoadMoreContainer>
+              <LoadMoreButton
+                onClick={() => { setHasLoadedMore(true); dispatch(getMoreCoinList()); }}
+                disabled={props.coinList.isLoading}
+              >
+                {props.coinList.isLoading ? "Loading..." : "Load More"}
+              </LoadMoreButton>
+            </LoadMoreContainer>
+          )}
+          {hasLoadedMore && (
+            <ApiWarning>
+              This app uses CoinGecko's free API, which may rate limit requests and temporarily disable search and other features. Please wait a moment before retrying.
+            </ApiWarning>
+          )}
+        </>
       )}
     </>
   );

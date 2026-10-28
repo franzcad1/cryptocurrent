@@ -30,7 +30,8 @@ export default function ChartOverview() {
   };
 
   useEffect(() => {
-    dispatch(getBitcoinData());
+    const t = setTimeout(() => dispatch(getBitcoinData()), 1000);
+    return () => clearTimeout(t);
     //eslint-disable-next-line
   }, []);
 

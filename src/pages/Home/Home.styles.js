@@ -6,32 +6,60 @@ export const HomeContainer = styled.div`
   max-width: 1200px;
 `;
 
-export const ErrorContainer = styled.div`
+export const ModalOverlay = styled.div`
   position: fixed;
-  width: 600px;
-  height: 60px;
-  background: red;
-  bottom: 0px;
-  right: 25%;
-  left: 50%;
-  margin-left: -300px;
-  border-radius: 15px 15px 0 0;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  z-index: 1000;
 `;
 
-export const Error = styled.h1`
-  font-size: 14px;
-  font-weight: 500;
+export const ModalBox = styled.div`
+  background: ${props => props.theme.background};
+  border-radius: 16px;
+  padding: 40px 48px;
+  max-width: 480px;
+  width: 90%;
   text-align: center;
-  font-style: normal;
-  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 `;
 
 export const ErrorIcon = styled(RunningWithErrors)`
-  width: 22px;
-  height: 22px;
-  color: #ffffff;
+  width: 48px;
+  height: 48px;
+  color: #e5534b;
+`;
+
+export const ModalTitle = styled.h2`
+  font-size: 20px;
+  font-weight: 700;
+  color: ${props => props.theme.main};
+  margin: 0;
+`;
+
+export const ModalText = styled.p`
+  font-size: 14px;
+  color: ${props => props.theme.main};
+  opacity: 0.7;
+  margin: 0;
+  line-height: 1.6;
+`;
+
+export const ModalClose = styled.button`
+  margin-top: 8px;
+  background: #2172e5;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 32px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover { opacity: 0.85; }
 `;

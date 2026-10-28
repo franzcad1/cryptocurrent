@@ -137,26 +137,32 @@ export const StyledLink = styled(NavLink)`
 `;
 
 export const ResultModal = styled.div`
-  border-radius: 0 0 15px 15px;
-  background: ${props => props.theme.background};
-  width: 250px;
-  max-height: 125px;
-  overflow: auto;
+  border-radius: 12px;
+  background: ${props => props.theme.secondary};
+  width: 350px;
+  max-height: 220px;
+  overflow-y: auto;
   position: absolute;
-  right: 275px;
-  z-index: 1;
+  right: 215px;
+  top: 80px;
+  z-index: 100;
   display: flex;
-  align-items: center;
   flex-direction: column;
-  gap: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  padding: 8px 0;
 `;
 
 export const ResultContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding: 10px 18px;
   color: ${props => props.theme.main};
+  font-size: 15px;
+  font-weight: 500;
   cursor: pointer;
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
 `;
 
 

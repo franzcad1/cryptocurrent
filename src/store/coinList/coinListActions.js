@@ -32,6 +32,7 @@ import {
 
   export const getMoreCoinList = () => async (dispatch, getState) => {
     const state = getState();
+    if (state.coinList.isLoading) return;
     const page = state.coinList.page + 1;
     try {
         dispatch({
