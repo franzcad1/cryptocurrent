@@ -36,6 +36,14 @@ export const ErrorMsg = styled.p`
   line-height: 1.6;
 `;
 
+export const ErrorHint = styled.p`
+  font-size: 12px;
+  color: ${(props) => props.theme.main};
+  opacity: 0.4;
+  margin: 4px 0 0;
+  a { color: inherit; text-decoration: underline; }
+`;
+
 export const RetryButton = styled.button`
   margin-top: 8px;
   background: #2172e5;
@@ -46,7 +54,9 @@ export const RetryButton = styled.button`
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  &:hover { opacity: 0.85; }
+  transition: opacity 0.2s;
+  &:hover:not(:disabled) { opacity: 0.85; }
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
 `;
 
 export const CoinPageContainer = styled.div`

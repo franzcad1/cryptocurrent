@@ -23,6 +23,7 @@ function coinReducer(state = initialState, action) {
         coinData: action.payload?.switchingCoin ? null : state.coinData,
         chartData: null,
         isLoading: true,
+        hasError: false,
       };
     case GET_COIN_SUCCESS:
       return {

@@ -31,6 +31,7 @@ import {
   ErrorTitle,
   ErrorMsg,
   RetryButton,
+  ErrorHint,
 } from "./Coin.styles";
 
 function usePrevious(value) {
@@ -89,6 +90,22 @@ export default function Coin() {
     setCryptoVal(e.target.value / coin.coinData.market_data.current_price.cad);
   };
 
+  const [retrySeconds, setRetrySeconds] = React.useState(0);
+  const [retryCount, setRetryCount] = React.useState(0);
+
+  React.useEffect(() => {
+    if (coin.hasError && !coin.coinData) {
+      setRetrySeconds(30);
+      setRetryCount((c) => c + 1);
+    }
+  }, [coin.hasError, coin.coinData]);
+
+  React.useEffect(() => {
+    if (retrySeconds <= 0) return;
+    const t = setTimeout(() => setRetrySeconds((s) => s - 1), 1000);
+    return () => clearTimeout(t);
+  }, [retrySeconds]);
+
   if (coin.hasError && !coin.coinData) {
     return (
       <CoinPageContainer>
@@ -96,9 +113,19 @@ export default function Coin() {
           <ErrorIconLarge />
           <ErrorTitle>Rate Limited</ErrorTitle>
           <ErrorMsg>
-            CoinGecko's free API is temporarily limiting requests. Please wait a moment and try again.
+            CoinGecko's free API is temporarily limiting requests. Please wait a moment before trying again.
           </ErrorMsg>
-          <RetryButton onClick={() => dispatch(getCoin(coinID))}>Try Again</RetryButton>
+          <RetryButton
+            disabled={retrySeconds > 0}
+            onClick={() => dispatch(getCoin(coinID))}
+          >
+            {retrySeconds > 0 ? `Retry in ${retrySeconds}s` : "Try Again"}
+          </RetryButton>
+          {retryCount > 1 && (
+            <ErrorHint>
+              Sorry about that — this is a demo using CoinGecko's free API, which has strict rate limits.
+            </ErrorHint>
+          )}
         </ErrorContainer>
       </CoinPageContainer>
     );
