@@ -2,6 +2,52 @@ import styled from "styled-components";
 import { Stack, Link45deg } from "styled-icons/bootstrap";
 import { Copy } from "styled-icons/boxicons-regular";
 import { Swap } from "styled-icons/entypo";
+import { RunningWithErrors } from "styled-icons/material";
+
+export const ErrorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 80px 24px;
+  text-align: center;
+`;
+
+export const ErrorIconLarge = styled(RunningWithErrors)`
+  width: 56px;
+  height: 56px;
+  color: #e5534b;
+`;
+
+export const ErrorTitle = styled.h2`
+  font-size: 20px;
+  font-weight: 700;
+  color: ${(props) => props.theme.main};
+  margin: 0;
+`;
+
+export const ErrorMsg = styled.p`
+  font-size: 14px;
+  color: ${(props) => props.theme.main};
+  opacity: 0.6;
+  margin: 0;
+  max-width: 400px;
+  line-height: 1.6;
+`;
+
+export const RetryButton = styled.button`
+  margin-top: 8px;
+  background: #2172e5;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover { opacity: 0.85; }
+`;
 
 export const CoinPageContainer = styled.div`
   margin: 25px auto;

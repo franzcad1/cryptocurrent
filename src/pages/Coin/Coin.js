@@ -26,6 +26,11 @@ import {
   ConvertLabel,
   StyledInput,
   CoinDescription,
+  ErrorContainer,
+  ErrorIconLarge,
+  ErrorTitle,
+  ErrorMsg,
+  RetryButton,
 } from "./Coin.styles";
 
 function usePrevious(value) {
@@ -83,6 +88,21 @@ export default function Coin() {
     setCurrencyVal(e.target.value);
     setCryptoVal(e.target.value / coin.coinData.market_data.current_price.cad);
   };
+
+  if (coin.hasError && !coin.coinData) {
+    return (
+      <CoinPageContainer>
+        <ErrorContainer>
+          <ErrorIconLarge />
+          <ErrorTitle>Rate Limited</ErrorTitle>
+          <ErrorMsg>
+            CoinGecko's free API is temporarily limiting requests. Please wait a moment and try again.
+          </ErrorMsg>
+          <RetryButton onClick={() => dispatch(getCoin(coinID))}>Try Again</RetryButton>
+        </ErrorContainer>
+      </CoinPageContainer>
+    );
+  }
 
   return (
     <>
