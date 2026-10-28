@@ -64,6 +64,36 @@ export const CoinPageContainer = styled.div`
   max-width: 1200px;
 `;
 
+const shimmer = `
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+  @keyframes shimmer { 0% { background-position: 200% 0 } 100% { background-position: -200% 0 } }
+`;
+
+export const SkeletonBlock = styled.div`
+  ${shimmer}
+  height: ${props => props.height || "20px"};
+  width: ${props => props.width || "100%"};
+  margin-bottom: ${props => props.mb || "0"};
+  border-radius: ${props => props.radius || "8px"};
+`;
+
+export const SkeletonRow = styled.div`
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: ${props => props.mb || "0"};
+`;
+
+export const SkeletonChartBlock = styled.div`
+  ${shimmer}
+  width: 100%;
+  height: 300px;
+  margin-top: 32px;
+`;
+
 export const Heading = styled.p`
   font-size: 22px;
   font-weight: 500;

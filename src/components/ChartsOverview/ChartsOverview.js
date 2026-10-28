@@ -11,12 +11,15 @@ import {
   Chart,
   BigText,
   ChartTextCointainer,
+  SkeletonChart,
+  SkeletonText,
 } from "./ChartsOverview.styles";
 
 export default function ChartOverview() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.bitcoin.data);
   const dataHourly = useSelector((state) => state.bitcoin.dataHourly);
+  const isLoading = useSelector((state) => state.bitcoin.isLoading);
 
   const getCurrentPriceSelector = () => {
     const currentPrice = data.prices[data.prices.length - 1][1];
@@ -30,10 +33,14 @@ export default function ChartOverview() {
   };
 
   useEffect(() => {
-    const t = setTimeout(() => dispatch(getBitcoinData()), 1000);
+    const t = setTimeout(() => dispatch(getBitcoinData()), 4000);
     return () => clearTimeout(t);
     //eslint-disable-next-line
   }, []);
+
+  const dateLabel = new Date().toLocaleDateString("default", {
+    month: "short", day: "numeric", year: "numeric",
+  });
 
   return (
     <>
@@ -42,30 +49,22 @@ export default function ChartOverview() {
         <Chart>
           <ChartTextCointainer>
             <ChartHeading>BTC</ChartHeading>
-            {data && <BigText>${getCurrentPriceSelector()}</BigText>}
-            <ChartHeading>
-              {new Date().toLocaleDateString("default", {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </ChartHeading>
+            {data && !isLoading
+              ? <BigText>${getCurrentPriceSelector()}</BigText>
+              : <SkeletonText height="44px" width="180px" mb="45px" />}
+            <ChartHeading>{dateLabel}</ChartHeading>
           </ChartTextCointainer>
-          <BitcoinChart data={data} />
+          {data && !isLoading ? <BitcoinChart data={data} /> : <SkeletonChart />}
         </Chart>
         <Chart>
           <ChartTextCointainer>
             <ChartHeading>Volume 24h</ChartHeading>
-            {dataHourly && <BigText>${getCurrentVolumeSelector()}</BigText>}
-            <ChartHeading>
-              {new Date().toLocaleDateString("default", {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </ChartHeading>
+            {dataHourly && !isLoading
+              ? <BigText>${getCurrentVolumeSelector()}</BigText>
+              : <SkeletonText height="44px" width="180px" mb="45px" />}
+            <ChartHeading>{dateLabel}</ChartHeading>
           </ChartTextCointainer>
-          <VolumeChart data={dataHourly} />
+          {dataHourly && !isLoading ? <VolumeChart data={dataHourly} /> : <SkeletonChart />}
         </Chart>
       </ChartsContainer>
     </>

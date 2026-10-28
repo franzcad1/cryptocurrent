@@ -26,14 +26,47 @@ import {
   LoadMoreButton,
   LoadMoreContainer,
   ApiWarning,
+  SkeletonRow,
+  SkeletonCell,
+  SkeletonBlock,
 } from "./TableOverview.styles";
+
+const SKELETON_COLS = 9;
+const SKELETON_ROWS = 10;
+
+function TableSkeleton() {
+  return (
+    <TableContainer>
+      <CoinTable>
+        <thead>
+          <TableHeadingRow>
+            <th>#</th><th>Name</th><th>Price</th><th>1h%</th><th>24h%</th>
+            <th>7d%</th><th>24h Volume/Market Cap</th><th>Circulating/Total Supply</th><th>Last 7d</th>
+          </TableHeadingRow>
+        </thead>
+        <tbody>
+          {Array.from({ length: SKELETON_ROWS }).map((_, i) => (
+            <SkeletonRow key={i}>
+              {Array.from({ length: SKELETON_COLS }).map((__, j) => (
+                <SkeletonCell key={j}>
+                  <SkeletonBlock width={j === 1 ? "120px" : j === 8 ? "100px" : "60px"} />
+                </SkeletonCell>
+              ))}
+            </SkeletonRow>
+          ))}
+        </tbody>
+      </CoinTable>
+    </TableContainer>
+  );
+}
+
 export default function TableOverview(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [hasLoadedMore, setHasLoadedMore] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => dispatch(getCoinList()), 2000);
+    const t = setTimeout(() => dispatch(getCoinList()), 8000);
     return () => clearTimeout(t);
     //eslint-disable-next-line
   }, []);
@@ -41,9 +74,12 @@ export default function TableOverview(props) {
   const handleNameClick = (coin) => {
     navigate(`/coin/${coin.id}`);
   };
+  const isWaiting = props.coinList.coins.length === 0;
+
   return (
     <>
       <Heading>Your Overview</Heading>
+      {isWaiting && <TableSkeleton />}
       {props.coinList.coins.length > 0 && (
         <>
           <TableContainer>

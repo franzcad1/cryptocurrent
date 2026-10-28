@@ -32,6 +32,9 @@ import {
   ErrorMsg,
   RetryButton,
   ErrorHint,
+  SkeletonBlock,
+  SkeletonRow,
+  SkeletonChartBlock,
 } from "./Coin.styles";
 
 function usePrevious(value) {
@@ -105,6 +108,32 @@ export default function Coin() {
     const t = setTimeout(() => setRetrySeconds((s) => s - 1), 1000);
     return () => clearTimeout(t);
   }, [retrySeconds]);
+
+  if (coin.isLoading || (!coin.coinData && !coin.hasError)) {
+    return (
+      <>
+        <CoinPageContainer>
+          <SkeletonBlock height="22px" width="120px" mb="70px" style={{ marginTop: "70px" }} />
+          <SkeletonRow mb="24px">
+            <SkeletonBlock height="80px" width="80px" radius="50%" />
+            <div style={{ flex: 1 }}>
+              <SkeletonBlock height="32px" width="200px" mb="12px" />
+              <SkeletonBlock height="18px" width="120px" />
+            </div>
+          </SkeletonRow>
+          <SkeletonBlock height="120px" mb="24px" />
+          <SkeletonRow mb="24px">
+            <div style={{ flex: 1 }}><SkeletonBlock height="64px" /></div>
+            <div style={{ flex: 1 }}><SkeletonBlock height="64px" /></div>
+            <div style={{ flex: 1 }}><SkeletonBlock height="64px" /></div>
+          </SkeletonRow>
+          <SkeletonBlock height="48px" width="400px" style={{ margin: "60px auto 24px" }} />
+          <SkeletonBlock height="48px" width="300px" style={{ margin: "0 auto" }} />
+        </CoinPageContainer>
+        <SkeletonChartBlock />
+      </>
+    );
+  }
 
   if (coin.hasError && !coin.coinData) {
     return (

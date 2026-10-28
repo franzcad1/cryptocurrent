@@ -146,6 +146,29 @@ export const LoadMoreButton = styled.button`
   }
 `;
 
+const shimmer = `
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+  @keyframes shimmer { 0% { background-position: 200% 0 } 100% { background-position: -200% 0 } }
+`;
+
+export const SkeletonRow = styled.tr`
+  td {
+    padding: 16px 12px;
+  }
+`;
+
+export const SkeletonCell = styled.td``;
+
+export const SkeletonBlock = styled.div`
+  ${shimmer}
+  height: ${props => props.height || "16px"};
+  width: ${props => props.width || "80%"};
+  margin: auto;
+`;
+
 export const ApiWarning = styled.p`
   font-size: 13px;
   color: #f0a500;

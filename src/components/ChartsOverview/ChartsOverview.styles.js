@@ -55,3 +55,24 @@ export const BigText = styled.p`
 export const ChartTextCointainer = styled.div`
   margin-bottom: 50px;
 `;
+
+const shimmer = `
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+  @keyframes shimmer { 0% { background-position: 200% 0 } 100% { background-position: -200% 0 } }
+`;
+
+export const SkeletonChart = styled.div`
+  ${shimmer}
+  width: 100%;
+  height: 200px;
+`;
+
+export const SkeletonText = styled.div`
+  ${shimmer}
+  height: ${props => props.height || "20px"};
+  width: ${props => props.width || "100%"};
+  margin-bottom: ${props => props.mb || "12px"};
+`;
